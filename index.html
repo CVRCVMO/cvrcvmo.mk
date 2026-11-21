@@ -1,0 +1,776 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>CVRCVMO Marketing</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&family=Geist:wght@600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: estudio de lujo — secciones que alternan negro profundo (con escena 3D de cromo detrás) y marfil (opacas, encima).
+     Titulares en serif fina, texto en sans geométrica, etiquetas en mono; el cromo del logo es el único brillo. */
+  :root {
+    color-scheme: dark;
+    --night: #0A0A0B;
+    --night-2: #141416;
+    --ivory: #EFEBE4;
+    --ivory-2: #E5E0D7;
+    --ink: #121212;
+    --silver: #E8E9EC;
+    --mist: #9C9CA3;
+    --stone: #6F6A62;
+    --gold: #C9A45C;
+    --line-dark: rgba(232, 233, 236, 0.12);
+    --line-light: rgba(18, 18, 18, 0.12);
+    --serif: "Instrument Serif", "Times New Roman", Georgia, serif;
+    --sans: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "Geist Mono", ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  body { background: var(--night); color: var(--silver); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  #stage { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; display: block; }
+  header, main, footer { position: relative; z-index: 2; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+  h1, h2, h3, h4, p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 1.5px solid var(--gold); outline-offset: 4px; border-radius: 4px; }
+  .label { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); }
+  .num { font-variant-numeric: tabular-nums; }
+  h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(2.6rem, 6vw, 5rem); line-height: 0.98; letter-spacing: -0.02em; text-wrap: balance; }
+  h2 em { font-style: italic; color: var(--gold); }
+  /* Títulos con el acabado de cromo inflado (estilo "Halo"). Sin 3D se ven con un degradado de cromo;
+     con 3D el texto queda en la página (lectores de pantalla, buscadores) y el cromo se dibuja encima. */
+  h2.chrome-h { margin-top: 18px; font-family: "Geist", "Manrope", system-ui, sans-serif; font-weight: 600; font-size: clamp(2.6rem, 6.2vw, 5.2rem); line-height: 1.08; letter-spacing: -0.035em;
+    background: linear-gradient(180deg, #F4F6FB 0%, #C9D1E2 38%, #5D6577 52%, #AEB7CA 62%, #EEF1F8 82%, #9AA3B6 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+  .light h2.chrome-h { background-image: linear-gradient(180deg, #8C95A8 0%, #4A5163 40%, #1C2030 52%, #6F788C 64%, #B9C1D2 82%, #545C6E 100%); }
+  h2.chrome-h.small { font-size: clamp(2.2rem, 4.4vw, 3.6rem); }
+  h2.chrome-h.big { font-size: clamp(2.8rem, 7vw, 6rem); }
+  .has3dh h2.chrome-h { background: none; }
+
+  /* Secciones claras (opacas, tapan el 3D) y oscuras (transparentes, se ve el 3D) */
+  .light { background: var(--ivory); color: var(--ink); }
+  .light .label { color: #8E6F33; }
+  .light h2 em { color: #8E6F33; }
+  section { padding-block: 120px; }
+
+  /* ---------- Barra ---------- */
+  .top { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 20; mix-blend-mode: difference; color: #FFFFFF; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 21; background: var(--night); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .top .brand { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.32em; text-decoration: none; }
+  .top nav { display: flex; gap: 30px; font-size: 0.88rem; }
+  .top nav a { text-decoration: none; opacity: 0.8; }
+  .top nav a:hover { opacity: 1; }
+
+  /* ---------- Portada (oscura, logo 3D) ---------- */
+  .hero { min-height: 100vh; display: grid; grid-template-rows: 1fr auto; padding-block: 110px 40px; }
+  .hero-stage { position: relative; display: grid; place-items: center; }
+  .hero-logo { width: min(760px, 92%); height: auto; opacity: 1; }
+  .has3d .hero-logo { opacity: 0; }
+  .hero-foot { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto; gap: 30px; align-items: end; border-top: 1px solid var(--line-dark); padding-top: 22px; }
+  .hero-foot h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 3.4vw, 2.8rem); line-height: 1.05; letter-spacing: -0.01em; }
+  .hero-foot h1 em { color: var(--gold); }
+  .hero-foot p { color: var(--mist); max-width: 40ch; }
+  .scroll-hint { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.16em; color: var(--mist); display: flex; align-items: center; gap: 10px; }
+  .scroll-hint i { width: 1px; height: 38px; background: linear-gradient(var(--silver), transparent); display: block; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 28px; border-radius: 999px; font: inherit; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.01em; text-decoration: none; cursor: pointer; border: 1px solid currentColor; background: transparent; color: inherit; }
+  .btn.chrome { border: 0; color: #0A0A0B; background: linear-gradient(180deg, #FFFFFF 0%, #DADDE2 45%, #9EA5AF 52%, #F4F5F7 70%, #C9CDD3 100%); box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 14px 30px rgba(0,0,0,0.35); }
+  .btn.ink { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+
+  /* ---------- Banda de promoción ---------- */
+  .promo { border-block: 1px solid var(--line-dark); background: rgba(10,10,11,0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .promo .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding-block: 22px; }
+  .promo b { font-family: var(--serif); font-weight: 400; font-size: 2rem; color: var(--gold); line-height: 1; margin-right: 12px; }
+
+  /* ---------- Trabajos: carrusel 3D ---------- */
+  .head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: end; margin-bottom: 56px; }
+  .head p { color: var(--stone); max-width: 46ch; justify-self: end; }
+  .dark .head p { color: var(--mist); }
+  .carousel { position: relative; height: 640px; perspective: 1800px; perspective-origin: 50% 40%; overflow-x: clip; overflow-y: visible; touch-action: pan-y; }
+  .ring { position: absolute; left: 50%; top: 40px; width: 270px; height: 480px; margin-left: -135px; transform-style: preserve-3d; }
+  .card3d { position: absolute; inset: 0; border-radius: 26px; overflow: hidden; background: #000; box-shadow: 0 40px 60px -30px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.08); }
+  .card3d video, .card3d img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card3d .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 16px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.75)); color: #fff; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: end; gap: 8px; }
+  .card3d .cap b { font-weight: 600; }
+  .card3d .cap span { font-family: var(--mono); font-size: 0.68rem; opacity: 0.8; }
+  .floor { position: absolute; left: 50%; bottom: 40px; width: 760px; max-width: 100%; height: 60px; transform: translateX(-50%); background: radial-gradient(ellipse, rgba(18,18,18,0.22), transparent 70%); }
+  .carousel-ctrl { display: flex; justify-content: center; gap: 10px; }
+  .round { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line-light); background: transparent; cursor: pointer; display: grid; place-items: center; color: var(--ink); }
+  .round svg { width: 18px; height: 18px; }
+  #soundBtn { width: auto; padding: 0 18px; border-radius: 999px; font: 500 0.82rem var(--mono); }
+
+  /* ---------- Servicios ---------- */
+  .svc-list { border-top: 1px solid var(--ink); }
+  .svc { display: grid; grid-template-columns: 70px minmax(0, 4fr) minmax(0, 5fr) minmax(0, 2fr) auto; gap: 24px; align-items: baseline; padding-block: 26px; border-bottom: 1px solid var(--line-light); transition: background 0.3s ease; }
+  .svc:hover { background: var(--ivory-2); }
+  .svc .n { font-family: var(--mono); font-size: 0.75rem; color: var(--stone); }
+  .svc h3 { font-family: var(--serif); font-weight: 400; font-size: 1.85rem; line-height: 1.05; }
+  .svc p { color: var(--stone); font-size: 0.95rem; }
+  .svc .spec { font-family: var(--mono); font-size: 0.74rem; color: var(--stone); line-height: 1.75; }
+  .svc .price { text-align: right; white-space: nowrap; }
+  .svc .price small { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--stone); text-transform: uppercase; }
+  .svc .price b { font-family: var(--serif); font-weight: 400; font-size: 2.2rem; line-height: 1; }
+  .svc-cat { display: flex; justify-content: space-between; padding: 34px 0 10px; }
+  .svc-cat:first-child { padding-top: 0; }
+  .was { display: block; font-family: var(--mono); font-size: 0.74rem; letter-spacing: 0.04em; color: var(--stone); }
+  .was s { text-decoration-thickness: 1.5px; text-decoration-color: #B4442E; }
+  .off { display: inline-block; font-family: var(--mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 999px; background: #B4442E; color: #FFF6EE; margin: 4px 0 2px; }
+  .pack .was { margin-bottom: 6px; } .pack .was .off { margin: 0 0 0 6px; vertical-align: 1px; }
+  .pack.star .was { color: var(--mist); }
+  .launch { display: inline-block; font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; border: 1px solid #8E6F33; color: #8E6F33; margin-bottom: 4px; }
+  .new { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.1em; padding: 3px 8px; border-radius: 999px; background: var(--ink); color: var(--ivory); vertical-align: 6px; margin-left: 8px; }
+
+  /* ---------- Monograma 3D (contacto) ---------- */
+  .mono-slot { aspect-ratio: 1; width: 100%; max-width: 460px; justify-self: center; position: relative; }
+  .mono-slot img { width: 70%; position: absolute; left: 15%; top: 15%; }
+  .has3d .mono-slot img { opacity: 0; }
+  /* ---------- Paquetes (claros, tarjetas que giran en 3D al entrar) ---------- */
+  .packs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; perspective: 1600px; }
+  .pack { background: #F7F4EF; border: 1px solid var(--line-light); border-radius: 22px; padding: 34px 30px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 22px; transform-style: preserve-3d; }
+  .pack.star { background: var(--night); color: var(--silver); border-color: var(--night); }
+  .pack.star p, .pack.star ul { color: var(--mist); }
+  .pack .top-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .pack h3 { font-family: var(--serif); font-weight: 400; font-size: 2.2rem; line-height: 1; }
+  .pack p { color: var(--stone); font-size: 0.95rem; }
+  .pack ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; color: var(--stone); font-size: 0.95rem; }
+  .pack li { display: flex; gap: 10px; }
+  .pack li::before { content: ""; width: 14px; height: 1px; background: currentColor; margin-top: 12px; flex: none; }
+  .pack .amt { font-family: var(--serif); font-size: 3.6rem; line-height: 1; }
+  .pack .amt small { font-family: var(--sans); font-size: 0.95rem; color: var(--stone); }
+  .pack .save { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.06em; color: #8E6F33; margin-top: 6px; }
+  .pack.star .save { color: var(--gold); }
+  .pill { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; border: 1px solid currentColor; opacity: 0.8; }
+  .pack.star .pill { background: var(--gold); color: var(--night); border-color: var(--gold); opacity: 1; }
+
+  /* ---------- Proceso + preguntas ---------- */
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--ink); counter-reset: s; }
+  .steps li { counter-increment: s; padding: 24px 22px 0 0; display: grid; gap: 10px; align-content: start; min-width: 0; }
+  .steps li::before { content: counter(s, upper-roman) "."; font-family: var(--serif); font-size: 2rem; line-height: 1; color: #8E6F33; }
+  .steps h3 { font-weight: 600; font-size: 1rem; }
+  .steps p { color: var(--stone); font-size: 0.92rem; }
+  .faq { margin-top: 90px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 40px; }
+  .faq details { border-bottom: 1px solid var(--line-light); }
+  .faq details:first-child { border-top: 1px solid var(--line-light); }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 20px; padding-block: 20px; font-family: var(--serif); font-size: 1.5rem; line-height: 1.15; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-family: var(--mono); font-size: 1rem; color: var(--stone); transition: transform 0.3s ease; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details p { color: var(--stone); padding-bottom: 22px; max-width: 64ch; }
+
+  /* ---------- Contacto (oscuro, monograma 3D otra vez) ---------- */
+  .contact { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 60px; align-items: center; }
+  .contact h2 { font-size: clamp(2.8rem, 7vw, 6rem); }
+  .contact dl { margin: 34px 0 0; display: grid; border-top: 1px solid var(--line-dark); }
+  .contact dl div { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; padding-block: 16px; border-bottom: 1px solid var(--line-dark); }
+  .contact dt { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); padding-top: 3px; }
+  .contact dd { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+  .contact dd a { text-decoration: none; border-bottom: 1px solid var(--line-dark); }
+  .contact dd a:hover { border-color: var(--gold); }
+  .contact .actions { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  #copied { font-family: var(--mono); font-size: 0.75rem; color: var(--mist); }
+  #msg { margin-top: 14px; color: var(--mist); font-size: 0.92rem; }
+  footer { border-top: 1px solid var(--line-dark); }
+  footer .wrap { padding-block: 34px 50px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--mist); font-size: 0.82rem; }
+
+  /* ---------- Apariciones y 3D en CSS ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .rise { opacity: 0; transform: translateY(30px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.16,1,.3,1); }
+    .js .rise.in { opacity: 1; transform: none; }
+    .js .flip { opacity: 0; transform: rotateX(-70deg) translateY(40px); transform-origin: 50% 100%; transition: opacity 0.9s ease, transform 1.1s cubic-bezier(.16,1,.3,1); }
+    .js .flip.in { opacity: 1; transform: none; }
+    .js .packs .flip:nth-child(2) { transition-delay: 0.12s; } .js .packs .flip:nth-child(3) { transition-delay: 0.24s; }
+    .js .steps.rise li { opacity: 0; transform: translateY(20px) rotateY(-40deg); transition: opacity 0.8s ease, transform 0.9s cubic-bezier(.16,1,.3,1); }
+    .js .steps.rise.in li { opacity: 1; transform: none; }
+    .js .steps.rise.in li:nth-child(2) { transition-delay: .08s; } .js .steps.rise.in li:nth-child(3) { transition-delay: .16s; } .js .steps.rise.in li:nth-child(4) { transition-delay: .24s; } .js .steps.rise.in li:nth-child(5) { transition-delay: .32s; }
+    .btn { transition: transform 0.2s ease, box-shadow 0.2s ease; } .btn:hover { transform: translateY(-2px); }
+    .scroll-hint i { animation: drip 1.8s ease-in-out infinite; transform-origin: top; }
+    @keyframes drip { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
+  }
+
+  @media (max-width: 900px) {
+    .top nav a:not(:last-child) { display: none; }
+    .hero-foot, .head, .voices, .contact, .faq { grid-template-columns: minmax(0, 1fr); }
+    .head p { justify-self: start; }
+    .scroll-hint { display: none; }
+    .svc { grid-template-columns: minmax(0, 1fr) auto; gap: 6px 18px; }
+    .svc .n { display: none; }
+    .svc p, .svc .spec { grid-column: 1 / -1; }
+    .svc .price { grid-row: 1; grid-column: 2; }
+    .packs { grid-template-columns: minmax(0, 1fr); }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 24px; }
+    section { padding-block: 84px; }
+    .carousel { height: 520px; }
+    .ring { width: 200px; height: 356px; margin-left: -100px; }
+    .contact dl div { grid-template-columns: 96px minmax(0, 1fr); }
+  }
+  @media print {
+    #stage, .top, .scroll-hint, .carousel-ctrl, #copy, #copied { display: none !important; }
+    .has3d .hero-logo, .has3d .mono-slot img { opacity: 1 !important; }
+    .js .rise, .js .flip, .js .steps.rise li { opacity: 1 !important; transform: none !important; }
+    .hero { min-height: auto; }
+    .pack, .svc, .card3d { break-inside: avoid; }
+    h2.chrome-h { background: none !important; color: #3A4152 !important; -webkit-text-fill-color: #3A4152 !important; }
+    .dark h2.chrome-h { color: #E3E7F0 !important; -webkit-text-fill-color: #E3E7F0 !important; }
+  }
+</style>
+
+<canvas id="stage" aria-hidden="true"></canvas>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">CVRCVMO</a>
+    <nav aria-label="Secciones">
+      <a href="#trabajos">Trabajos</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#web">Web</a>
+      <a href="#paquetes">Paquetes</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <!-- PORTADA (oscura) -->
+  <div class="wrap hero dark">
+    <div class="hero-stage">
+      <img class="hero-logo" id="logoAnchor" src="img/logo-lux.png" alt="CVRCVMO Marketing" width="1400" height="480">
+    </div>
+    <div class="hero-foot">
+      <h1>Video animado y diseño <em>que eleva la percepción de tu marca.</em></h1>
+      <div style="display:grid;gap:18px">
+        <p>Videos de producto, reels de tendencia, logos animados, diseño de marca y páginas web para tu negocio. Videos en 24 a 72 horas.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px"><a class="btn chrome" href="#contacto">Cotizar proyecto</a><a class="btn" href="#trabajos">Ver trabajos</a></div>
+      </div>
+      <div class="scroll-hint"><i></i>SCROLL</div>
+    </div>
+  </div>
+
+  <div class="promo">
+    <div class="wrap">
+      <span><b>−20%</b>Promoción de lanzamiento para los primeros 5 negocios.</span>
+      <span class="label">Del 20 al 30 de noviembre</span>
+    </div>
+  </div>
+
+  <!-- TRABAJOS (claro, carrusel 3D) -->
+  <section id="trabajos" class="light">
+    <div class="wrap">
+      <div class="head rise">
+        <div><span class="label">01 — Trabajos</span><h2 class="chrome-h" data-h="trabajos">Proyectos<br>recientes</h2></div>
+        <p>Trabajos reales para Hustlers Ambition y ejemplos de concepto para marcas premium de cada servicio. AURUM, NOVA, Maison Véra y Halo son marcas ficticias creadas como muestra. Arrastra o usa las flechas para girar.</p>
+      </div>
+      <div class="carousel" id="carousel">
+        <div class="floor"></div>
+        <div class="ring" id="ring">
+          <div class="card3d"><video src="video/reel-2pac.mp4" poster="img/reel-estampado.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Reel de tendencia</b><span>Hustlers Ambition</span></div></div>
+          <div class="card3d"><video src="video/ej-aurum-logo-animado.mp4" poster="img/ej-aurum-logo-animado.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Logo animado</b><span>AURUM</span></div></div>
+          <div class="card3d"><video src="video/info.mp4" poster="img/info-pedido.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Video informativo</b><span>Hustlers Ambition</span></div></div>
+          <div class="card3d"><video src="video/ej-nova-reel.mp4" poster="img/ej-nova-reel.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Reel de tendencia</b><span>NOVA</span></div></div>
+          <div class="card3d"><video src="video/ej-vera-producto.mp4" poster="img/ej-vera-producto.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Video de producto</b><span>Maison Véra</span></div></div>
+          <div class="card3d"><video src="video/promo.mp4" poster="img/promo-producto.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Promo de marca</b><span>Hustlers Ambition</span></div></div>
+          <div class="card3d"><video src="video/ej-vera-diseno-logo.mp4" poster="img/ej-vera-diseno-logo.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Diseño de logo</b><span>Maison Véra</span></div></div>
+          <div class="card3d"><video src="video/ej-halo-informativo.mp4" poster="img/ej-halo-informativo.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Video informativo</b><span>Halo</span></div></div>
+          <div class="card3d"><video src="video/ej-vera-mockup.mp4" poster="img/ej-vera-mockup.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Mockup de producto</b><span>Maison Véra</span></div></div>
+          <div class="card3d"><video src="video/ej-vera-kit-de-marca.mp4" poster="img/ej-vera-kit-de-marca.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Kit de marca</b><span>Maison Véra</span></div></div>
+          <div class="card3d"><video src="video/ej-halo-carrusel.mp4" poster="img/ej-halo-carrusel.jpg" muted loop playsinline preload="none"></video><div class="cap"><b>Carrusel informativo</b><span>Halo</span></div></div>
+        </div>
+      </div>
+      <div class="carousel-ctrl">
+        <button class="round" type="button" id="prev" aria-label="Anterior"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 3L5 8l5 5"/></svg></button>
+        <button class="round" type="button" id="soundBtn">Sonido</button>
+        <button class="round" type="button" id="next" aria-label="Siguiente"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3l5 5-5 5"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS (claro) -->
+  <section id="servicios" class="light" style="padding-top:20px">
+    <div class="wrap">
+      <div class="head rise">
+        <div><span class="label">02 — Servicios</span><h2 class="chrome-h" data-h="servicios">Servicios<br>y precios</h2></div>
+        <p>Precios en pesos mexicanos. Cada proyecto incluye 2 rondas de cambios y archivos finales en alta calidad.</p>
+      </div>
+      <div class="rise">
+        <div class="svc-cat"><span class="label">Video · MP4 1080p</span></div>
+        <div class="svc-list">
+          <div class="svc"><span class="n">V.01</span><h3>Video de producto</h3><p>Tu producto con tu logo, colores y precio, animado para anunciar lanzamientos.</p><span class="spec">10–15 s<br>Vertical u horizontal<br>24–48 h</span><span class="price"><small>Desde</small><b class="num">$325</b></span></div>
+          <div class="svc"><span class="n">V.02</span><h3>Reel de tendencia</h3><p>Reproductor de música, tipografía cinética, glitch, 3D y revelación de producto.</p><span class="spec">15–25 s<br>1080 × 1920<br>48–72 h</span><span class="price"><small>Desde</small><b class="num">$510</b></span></div>
+          <div class="svc"><span class="n">V.03</span><h3>Video informativo</h3><p>Cómo comprar, envíos, menú, horarios, tallas o precios, explicado claro y animado.</p><span class="spec">40–90 s<br>1080 × 1920<br>72 h</span><span class="price"><small>Desde</small><b class="num">$460</b></span></div>
+          <div class="svc"><span class="n">V.04</span><h3>Logo animado</h3><p>Animación de identidad para la apertura y el cierre de tus videos: transiciones fluidas y acabado en 3D que dan consistencia y reconocimiento a la marca.</p><span class="spec">3–5 s<br>Fondo transparente<br>24 h</span><span class="price"><small>Desde</small><b class="num">$290</b></span></div>
+        </div>
+        <div class="svc-cat"><span class="label">Diseño · PNG · SVG</span></div>
+        <div class="svc-list">
+          <div class="svc"><span class="n">D.01</span><h3>Diseño de logo</h3><p>Identidad visual a la medida: logotipo y símbolo con versiones para fondo claro y oscuro, acabados en cromo o 3D y archivos listos para redes, impresión y empaque.</p><span class="spec">Logo + símbolo<br>2 propuestas<br>48 h</span><span class="price"><small>Desde</small><b class="num">$480</b></span></div>
+          <div class="svc"><span class="n">D.02</span><h3>Kit de marca</h3><p>Logo en alta calidad, paleta de colores, tipografías y guía de uso.</p><span class="spec">Logo + paleta + tipografía<br>48 h</span><span class="price"><small>Desde</small><b class="num">$290</b></span></div>
+          <div class="svc"><span class="n">D.03</span><h3>Carrusel informativo</h3><p>Hasta 6 imágenes: cómo comprar, envíos, tallas o preguntas frecuentes.</p><span class="spec">6 imágenes<br>1080 × 1350<br>48 h</span><span class="price"><small>Desde</small><b class="num">$255</b></span></div>
+          <div class="svc"><span class="n">D.04</span><h3>Mockup de producto</h3><p>Tu diseño aplicado a la prenda o el producto, para venderlo antes de producirlo.</p><span class="spec">3 por $300<br>24 h</span><span class="price"><small>Desde</small><b class="num">$120</b></span></div>
+        </div>
+        <div class="svc-cat" id="web"><span class="label">Web · Páginas para tu marca</span></div>
+        <div class="svc-list">
+          <div class="svc"><span class="n">W.01</span><h3>Página web</h3><p>Sitio profesional para tu marca, adaptado a celular: inicio, catálogo o servicios, galería, ubicación y botón directo a WhatsApp. Con tu dominio propio y animaciones a la medida.</p><span class="spec">Hasta 5 secciones<br>Publicación incluida<br>Dominio aparte · 5–7 días</span><span class="price"><span class="launch">Precio de lanzamiento</span><small>Desde</small><b class="num">$2,400</b></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAQUETES (claro) -->
+  <section id="paquetes" class="light">
+    <div class="wrap">
+      <div class="head rise">
+        <div><span class="label">03 — Paquetes</span><h2 class="chrome-h" data-h="paquetes">Paquetes<br>de la casa</h2></div>
+        <p>Combinaciones pensadas para cada etapa del negocio. La promoción de lanzamiento aplica sobre estos precios.</p>
+      </div>
+      <div class="packs">
+        <article class="pack flip">
+          <div class="top-row"><h3>Lanzamiento</h3><span class="pill">Inicio</span></div>
+          <p>Lo esencial para presentar tu marca en redes.</p>
+          <ul><li>Logo animado</li><li>1 video de producto</li><li>1 reel de tendencia</li></ul>
+          <div><div class="was">Antes <s>$1,290</s> <span class="off">−27%</span></div><div class="amt num">$940</div><div class="save">AHORRAS $185 VS. POR SEPARADO</div></div>
+        </article>
+        <article class="pack star flip">
+          <div class="top-row"><h3>Ventas en línea</h3><span class="pill">Más pedido</span></div>
+          <p>Todo lo que tu cliente necesita para comprarte sin dudas.</p>
+          <ul><li>Video informativo</li><li>Carrusel de 6 imágenes</li><li>3 mockups de producto</li></ul>
+          <div><div class="was">Antes <s>$1,230</s> <span class="off">−27%</span></div><div class="amt num">$890</div><div class="save">AHORRAS $125 VS. POR SEPARADO</div></div>
+        </article>
+        <article class="pack flip">
+          <div class="top-row"><h3>Mensual</h3><span class="pill">Cada mes</span></div>
+          <p>Presencia constante, con contenido nuevo cada semana.</p>
+          <ul><li>4 videos de producto</li><li>2 reels de tendencia</li><li>Calendario de publicación</li></ul>
+          <div><div class="was">Antes <s>$2,040</s> <span class="off">−21%</span></div><div class="amt num">$1,600 <small>/ mes</small></div><div class="save">AHORRAS $720 VS. POR SEPARADO</div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESO Y PREGUNTAS (claro) -->
+  <section id="proceso" class="light" style="padding-top:20px">
+    <div class="wrap">
+      <div class="head rise">
+        <div><span class="label">04 — Proceso</span><h2 class="chrome-h" data-h="proceso">Cómo<br>trabajo</h2></div>
+        <p>Un proceso corto y claro, de la primera conversación a los archivos finales.</p>
+      </div>
+      <ol class="steps rise">
+        <li><h3>Brief</h3><p>Me cuentas qué vendes, a quién y qué video necesitas.</p></li>
+        <li><h3>Material</h3><p>Logo, fotos, precios y colores. Si falta algo, lo resolvemos.</p></li>
+        <li><h3>Anticipo</h3><p>50% por transferencia o depósito en OXXO para agendar.</p></li>
+        <li><h3>Primera versión</h3><p>En 24 a 72 horas, con 2 rondas de cambios.</p></li>
+        <li><h3>Entrega</h3><p>Liquidas el resto y recibes tus archivos finales.</p></li>
+      </ol>
+      <div class="faq">
+        <div class="rise"><span class="label">05 — Preguntas</span><h2 class="chrome-h small" data-h="preguntas">Preguntas<br>frecuentes</h2></div>
+        <div class="rise">
+          <details open><summary>¿La página web es mía?</summary><p>Sí. Queda a nombre de tu negocio y te entrego todos los archivos. La publico por ti y, si quieres tu propio dominio (por ejemplo tumarca.com), lo compras a tu nombre y lo conecto.</p></details>
+          <details><summary>¿Qué necesito para empezar?</summary><p>Fotos de tus productos y tu logo. Si no tienes buenas fotos, puedo hacer mockups.</p></details>
+          <details><summary>¿En qué formatos entregas?</summary><p>Vertical para TikTok, Reels e historias (1080 × 1920), horizontal (1920 × 1080) y cuadrado si lo necesitas.</p></details>
+          <details><summary>¿Qué pasa si quiero cambios?</summary><p>Incluyo 2 rondas de cambios. Cambios adicionales o un concepto nuevo se cotizan aparte.</p></details>
+          <details><summary>¿Con qué negocios trabajas?</summary><p>Ropa, comida, barberías, uñas, tatuajes, tiendas en línea, eventos y servicios.</p></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO (oscuro, monograma 3D) -->
+  <section id="contacto" class="dark">
+    <div class="wrap contact">
+      <div class="rise">
+        <span class="label">06 — Contacto</span>
+        <h2 class="chrome-h big" data-h="contacto">Hagamos algo<br>que se vea caro.</h2>
+        <dl>
+          <div><dt>WhatsApp</dt><dd><a href="https://wa.me/529843182480" target="_blank" rel="noopener">984 318 2480</a></dd></div>
+          <div><dt>Instagram</dt><dd><a href="https://instagram.com/cvrcvmo.mk" target="_blank" rel="noopener">@cvrcvmo.mk</a></dd></div>
+          <div><dt>Pagos</dt><dd>Transferencia o depósito en OXXO</dd></div>
+        </dl>
+        <div class="actions"><button class="btn chrome" type="button" id="copy">Copiar mensaje para cotizar</button><span id="copied" aria-live="polite"></span></div>
+        <p id="msg">"Hola, vi tu catálogo. Quiero cotizar un proyecto para mi negocio de ______."</p>
+      </div>
+      <div class="mono-slot" id="monoB"><img src="img/monograma-cvrcvmo.png" alt=""></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 CVRCVMO Marketing</span><span>Precios vigentes en noviembre de 2026. Los precios "desde" varían según duración y complejidad.</span></div>
+</footer>
+
+<script>
+  document.documentElement.classList.add('js');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Apariciones al hacer scroll (sin JS o con movimiento reducido, todo está visible)
+  var targets = document.querySelectorAll('.rise, .flip');
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, {rootMargin: '0px 0px -10% 0px'});
+    targets.forEach(function (el) { io.observe(el); });
+  } else { targets.forEach(function (el) { el.classList.add('in'); }); }
+
+  // Carrusel 3D: gira solo, con el scroll, con flechas o arrastrando
+  (function () {
+    var ring = document.getElementById('ring'), wrap = document.getElementById('carousel');
+    var cards = ring.querySelectorAll('.card3d'), n = cards.length, step = 360 / n;
+    var angle = 0, target = 0, drag = null;
+    function radius() { return ring.offsetWidth / 2 / Math.tan(Math.PI / n) + 40; }
+    function place() { var r = radius(); cards.forEach(function (c, i) { c.style.transform = 'rotateY(' + (i * step) + 'deg) translateZ(' + r + 'px)'; }); }
+    place(); addEventListener('resize', place);
+    document.getElementById('prev').onclick = function () { target = Math.round(target / step) * step + step; };
+    document.getElementById('next').onclick = function () { target = Math.round(target / step) * step - step; };
+    wrap.addEventListener('pointerdown', function (e) { drag = {x: e.clientX, t: target}; wrap.setPointerCapture(e.pointerId); });
+    wrap.addEventListener('pointermove', function (e) { if (drag) target = drag.t + (e.clientX - drag.x) * 0.3; });
+    wrap.addEventListener('pointerup', function () { if (drag) { target = Math.round(target / step) * step; drag = null; } });
+    var front = 0;
+    var snd = document.getElementById('soundBtn'), soundOn = false;
+    snd.onclick = function () { soundOn = !soundOn; snd.textContent = soundOn ? 'Silenciar' : 'Sonido'; update(true); };
+    function update(force) {
+      var f = ((Math.round(-angle / step) % n) + n) % n;
+      if (f !== front || force) {
+        front = f;
+        cards.forEach(function (c, i) {
+          var v = c.querySelector('video'); if (!v) return;
+          // solo se reproduce la tarjeta del frente (y sus vecinas se quedan en su portada)
+          if (i === front) { v.muted = !soundOn; v.play().catch(function () {}); }
+          else { v.muted = true; if (!v.paused) v.pause(); }
+        });
+      }
+    }
+    var last = performance.now();
+    function tick(now) {
+      var dt = Math.min(0.05, (now - last) / 1000); last = now;
+      if (!drag && !reduce) target -= dt * 6; // giro lento automático
+      var scrollTurn = reduce ? 0 : scrollY * 0.06;
+      angle += (target - scrollTurn - angle) * 0.08;
+      ring.style.transform = 'translateZ(' + (-radius()) + 'px) rotateY(' + angle + 'deg)';
+      cards.forEach(function (c, i) {
+        var a = ((i * step + angle) % 360 + 360) % 360; var d = Math.cos(a * Math.PI / 180);
+        c.style.filter = 'brightness(' + (0.45 + 0.55 * Math.max(0, d)) + ')';
+      });
+      update(false);
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  // Copiar mensaje
+  document.getElementById('copy').addEventListener('click', function () {
+    var text = 'Hola, vi tu catálogo. Quiero cotizar un proyecto para mi negocio de ______.', out = document.getElementById('copied');
+    function fallback() { var r = document.createRange(); r.selectNodeContents(document.getElementById('msg')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); out.textContent = 'Selecciona y copia el mensaje'; }
+    try { navigator.clipboard.writeText(text).then(function () { out.textContent = 'Mensaje copiado'; }, fallback); } catch (e) { fallback(); }
+  });
+</script>
+
+<script type="importmap">
+  {"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+  // Escena 3D detrás de las secciones oscuras: logo de cromo extruido, cromo líquido y monograma.
+  import * as THREE from 'three';
+  import {SVGLoader} from 'three/addons/loaders/SVGLoader.js';
+  import {ParametricGeometry} from 'three/addons/geometries/ParametricGeometry.js';
+  import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+
+  const canvas = document.getElementById('stage');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({canvas, antialias: true, alpha: true}); }
+  catch (e) { canvas.remove(); throw e; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.35;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 100);
+  camera.position.set(0, 0, 10);
+  // Estudio virtual: la sala base + paneles de luz blanca intensa que el cromo refleja como softboxes
+  const studio = new RoomEnvironment();
+  const panel = (w, h, x, y, z, ry, rx, k) => {
+    const m = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.DoubleSide});
+    m.color.setScalar(k);
+    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(w, h), m);
+    mesh.position.set(x, y, z); mesh.rotation.set(rx, ry, 0); studio.add(mesh);
+  };
+  panel(14, 3, 0, 9, 0, 0, Math.PI / 2, 9);        // techo
+  panel(3, 12, -10, 2, 2, Math.PI / 2, 0, 7);       // lateral izquierdo
+  panel(3, 12, 10, 2, -2, -Math.PI / 2, 0, 5);      // lateral derecho
+  panel(10, 1.2, 0, 3, 10, Math.PI, 0, 8);          // tira frontal
+  panel(16, 2.2, 0, 0.6, 9, Math.PI, 0, 6);         // franja ancha frente al logo (da el brillo de la cara frontal)
+  panel(16, 0.5, 0, -2.2, 9, Math.PI, 0, 9);        // franja fina de abajo (la línea brillante típica del cromo)
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(studio, 0.0).texture;
+  const key = new THREE.DirectionalLight(0xffffff, 3); key.position.set(-4, 5, 6); scene.add(key);
+  const fill = new THREE.DirectionalLight(0xfff1d6, 1.4); fill.position.set(5, -2, 4); scene.add(fill);
+  const sweep = new THREE.PointLight(0xffffff, 60, 14); scene.add(sweep); // luz que barre el cromo
+
+  const chrome = new THREE.MeshPhysicalMaterial({color: 0xffffff, metalness: 1, roughness: 0.05, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 1.6});
+  const gold = new THREE.MeshPhysicalMaterial({color: 0xe7bd5a, metalness: 1, roughness: 0.18, clearcoat: 1, envMapIntensity: 2.2});
+
+  // Pasa un rectángulo de la página a posición y tamaño en el mundo 3D (plano z = 0)
+  const halfH = () => Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
+  const toWorld = (rect) => {
+    const hh = halfH(), hw = hh * camera.aspect;
+    return {
+      x: ((rect.left + rect.width / 2) / innerWidth * 2 - 1) * hw,
+      y: -((rect.top + rect.height / 2) / innerHeight * 2 - 1) * hh,
+      w: rect.width / innerWidth * 2 * hw,
+    };
+  };
+
+  // Carga un SVG de formas y lo extruye; las piezas con id "crown" van en oro
+  const extrude = (url, depth, bevel, mat = chrome) => fetch(url).then((r) => r.text()).then((txt) => {
+    const data = new SVGLoader().parse(txt);
+    const inner = new THREE.Group();
+    data.paths.forEach((p) => {
+      const isGold = p.userData?.node?.id === 'crown';
+      SVGLoader.createShapes(p).forEach((shape) => {
+        const g = new THREE.ExtrudeGeometry(shape, {depth: isGold ? depth * 0.7 : depth, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel * 0.6, bevelSegments: 5, curveSegments: 14});
+        inner.add(new THREE.Mesh(g, isGold ? gold : mat));
+      });
+    });
+    const box = new THREE.Box3().setFromObject(inner);
+    const c = box.getCenter(new THREE.Vector3());
+    inner.position.set(-c.x, -c.y, -c.z);
+    const flip = new THREE.Group(); flip.scale.set(1, -1, 1); flip.add(inner);
+    const holder = new THREE.Group(); holder.add(flip);
+    holder.userData.width = box.max.x - box.min.x;
+    return holder;
+  });
+
+  // Cromo "líquido" para el destello: se ondula suave como metal fundido (unidades del SVG)
+  const starMat = chrome.clone();
+  starMat.envMapIntensity = 2.2;
+  starMat.onBeforeCompile = (sh) => {
+    sh.uniforms.uTime = u.uTime;
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', `#include <common>
+        uniform float uTime;
+        vec3 wav(vec3 p){ return vec3(sin(p.y*3.0+uTime*1.3), sin(p.x*3.0+uTime*1.1), sin((p.x+p.y)*2.2+uTime*0.9)) * 0.035; }`)
+      .replace('#include <begin_vertex>', `#include <begin_vertex>
+        transformed += wav(position);`);
+  };
+  let word = null, mono = null, star = null;
+  const heroGroup = new THREE.Group();
+  scene.add(heroGroup);
+  const ready = [];
+  ready.push(extrude('img/wordmark-3d.svg', 46, 7).then((g) => { word = g; heroGroup.add(g); }));
+  // Destello de 4 puntas "inflado": contorno ✦ (lados curvos hacia adentro) con el centro abombado,
+  // como una almohada de cromo líquido. Se arma como una esfera cuyo contorno sigue la forma de la estrella.
+  {
+    const n = 0.6; // < 1 hace los lados cóncavos
+    const R = (th) => Math.pow(Math.pow(Math.abs(Math.cos(th)), n) + Math.pow(Math.abs(Math.sin(th)), n), -1 / n);
+    const g = new ParametricGeometry((u, v, target) => {
+      const th = -u * Math.PI * 2, ph = v * Math.PI; // el signo deja las caras mirando hacia afuera
+      const r = R(th) * Math.sin(ph);
+      target.set(r * Math.cos(th), r * Math.sin(th), 0.3 * Math.cos(ph));
+    }, 160, 80);
+    const mesh = new THREE.Mesh(g, starMat);
+    star = new THREE.Group(); star.add(mesh); star.userData.width = 2;
+    heroGroup.add(star);
+  }
+  ready.push(extrude('img/monograma-3d.svg', 90, 10).then((g) => { mono = g; scene.add(g); }));
+  Promise.all(ready).then(() => document.documentElement.classList.add('has3d')).catch(() => {});
+
+  // ---------- Títulos de cromo inflado (estilo "Halo") ----------
+  // Estudio blanco: cielo claro arriba, horizonte oscuro abajo y paneles negros a los lados.
+  // El cromo refleja ese horizonte: es lo que le da el contraste de metal pulido.
+  // withHorizon = true para secciones claras (caras del cromo oscuras, contrastan con el marfil);
+  // false para secciones negras (caras brillantes, contrastan con el negro).
+  const makeStudio = (withHorizon) => {
+  const lightStudio = new THREE.Scene();
+  {
+    const sky = new THREE.SphereGeometry(20, 64, 32);
+    const col = [];
+    const pos = sky.attributes.position;
+    for (let i = 0; i < pos.count; i++) {
+      const y = pos.getY(i) / 20;
+      const h = THREE.MathUtils.smoothstep(y, -0.06, 0.08);
+      const v = THREE.MathUtils.lerp(0.06, 1.35, h) * (y < -0.4 ? 1 + (-0.4 - y) * 0.8 : 1);
+      col.push(v * 0.97, v * 0.99, v * 1.04);
+    }
+    sky.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    lightStudio.add(new THREE.Mesh(sky, new THREE.MeshBasicMaterial({vertexColors: true, side: THREE.BackSide})));
+    const dark = (w, h, x, y, z, ry) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({color: 0x050608, side: THREE.DoubleSide})); m.position.set(x, y, z); m.rotation.y = ry; lightStudio.add(m); };
+    dark(6, 8, -12, 3, 2, Math.PI / 2);
+    dark(5, 5, 12, 2, -3, -Math.PI / 2);
+    dark(22, 1.1, 0, 5.5, 12, Math.PI);   // franja oscura arriba, detrás de la cámara
+    if (withHorizon) {
+      dark(40, 3.2, 0, -1.4, 12, Math.PI);  // horizonte oscuro detrás de la cámara: las caras frontales del cromo lo reflejan
+      const mid = new THREE.Mesh(new THREE.PlaneGeometry(40, 1.2), new THREE.MeshBasicMaterial({color: 0x3a4152, side: THREE.DoubleSide}));
+      mid.position.set(0, 0.8, 12); mid.rotation.y = Math.PI; lightStudio.add(mid);   // transición gris azulada
+    }
+    const glow = new THREE.Mesh(new THREE.PlaneGeometry(14, 4), new THREE.MeshBasicMaterial({color: 0xffffff}));
+    glow.material.color.setScalar(3); glow.position.set(0, 14, 0); glow.rotation.x = Math.PI / 2; lightStudio.add(glow);
+  }
+  return new THREE.PMREMGenerator(renderer).fromScene(lightStudio, 0.0).texture;
+  };
+  const envForLight = makeStudio(true);
+  const envForDark = makeStudio(false);
+
+  // Material de cromo azulado con ondulación de metal líquido (cada título tiene la suya)
+  const haloMat = (env) => {
+    const m = new THREE.MeshPhysicalMaterial({color: 0xd6deef, metalness: 1, roughness: 0.07, clearcoat: 1, clearcoatRoughness: 0.04, envMap: env, envMapIntensity: 1.25});
+    m.userData.u = {uTime: {value: 0}, uAmp: {value: 0}};
+    m.onBeforeCompile = (sh) => {
+      Object.assign(sh.uniforms, m.userData.u);
+      sh.vertexShader = sh.vertexShader
+        .replace('#include <common>', `#include <common>
+          uniform float uTime; uniform float uAmp;
+          vec3 wav(vec3 p){ return uAmp * vec3(sin(p.y*0.09+uTime*2.1)*sin(p.x*0.03+uTime*1.3), sin(p.x*0.07-uTime*1.7), sin((p.x+p.y)*0.05+uTime*1.5)) * 6.0; }`)
+        .replace('#include <beginnormal_vertex>', `#include <beginnormal_vertex>
+          vec3 n0 = normalize(objectNormal);
+          vec3 tg = normalize(cross(n0, abs(n0.y) < 0.99 ? vec3(0.0,1.0,0.0) : vec3(1.0,0.0,0.0)));
+          vec3 bt = cross(n0, tg); float e = 0.6;
+          vec3 pA = position + wav(position);
+          vec3 pB = position + tg*e; pB += wav(pB);
+          vec3 pC = position + bt*e; pC += wav(pC);
+          objectNormal = normalize(cross(pB - pA, pC - pA));`)
+        .replace('#include <begin_vertex>', `#include <begin_vertex>
+          transformed = position + wav(position);`);
+    };
+    return m;
+  };
+
+  const headEls = [...document.querySelectorAll('h2.chrome-h')];
+  const heads = [];
+  fetch('img/headings-3d.svg').then((r) => r.text()).then((txt) => {
+    const data = new SVGLoader().parse(txt);
+    headEls.forEach((el, idx) => {
+      const id = 'h-' + el.dataset.h;
+      const p = data.paths.find((q) => q.userData?.node?.id === id);
+      if (!p) return;
+      const mat = haloMat(el.closest('.dark') ? envForDark : envForLight);
+      const inner = new THREE.Group();
+      // Extrusión "inflada": el borde redondeado ocupa casi todo el trazo, como un tubo de cromo
+      SVGLoader.createShapes(p).forEach((shape) => {
+        const g = new THREE.ExtrudeGeometry(shape, {depth: 1, bevelEnabled: true, bevelThickness: 4.6, bevelSize: 3.4, bevelOffset: -2.4, bevelSegments: 7, curveSegments: 10});
+        inner.add(new THREE.Mesh(g, mat));
+      });
+      const box = new THREE.Box3().setFromObject(inner);
+      const c = box.getCenter(new THREE.Vector3());
+      inner.position.set(-c.x, -c.y, -c.z);
+      const flip = new THREE.Group(); flip.scale.set(1, -1, 1); flip.add(inner);
+      const holder = new THREE.Group(); holder.add(flip); holder.visible = false;
+      scene.add(holder);
+      heads.push({el, holder, mat, w: box.max.x - box.min.x, h: box.max.y - box.min.y, t0: -1, idx});
+    });
+    document.documentElement.classList.add('has3dh');
+  }).catch(() => {});
+
+  // Cromo líquido detrás del logo
+  const u = {uTime: {value: 0}, uAmp: {value: 0.12}};
+  const liquid = new THREE.MeshPhysicalMaterial({color: 0x15161a, metalness: 1, roughness: 0.12, clearcoat: 1, envMapIntensity: 0.9});
+  liquid.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, u);
+    sh.vertexShader = sh.vertexShader
+      .replace('#include <common>', `#include <common>
+        uniform float uTime; uniform float uAmp;
+        float wob(vec3 p){ return uAmp*(sin(p.x*2.2+uTime*0.8)*sin(p.y*2.6+uTime*0.6)+0.6*sin(p.z*3.4-uTime*0.7)+0.4*sin((p.x+p.y)*5.0+uTime)); }`)
+      .replace('#include <beginnormal_vertex>', `#include <beginnormal_vertex>
+        vec3 n0=normalize(normal); vec3 tg=normalize(cross(n0, abs(n0.y)<0.99?vec3(0.,1.,0.):vec3(1.,0.,0.))); vec3 bt=cross(n0,tg); float e=0.01;
+        vec3 pA=position+n0*wob(position); vec3 pB=position+tg*e; pB+=normalize(pB)*wob(pB); vec3 pC=position+bt*e; pC+=normalize(pC)*wob(pC);
+        objectNormal=normalize(cross(pB-pA,pC-pA));`)
+      .replace('#include <begin_vertex>', `#include <begin_vertex>
+        transformed = position + normalize(normal)*wob(position);`);
+  };
+  const blob = new THREE.Mesh(new THREE.IcosahedronGeometry(1, 64), liquid);
+  blob.position.z = -3;
+  // (la gota de cromo se quitó para dejar el fondo limpio, como en la referencia)
+
+
+  let mx = 0, my = 0;
+  addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - 0.5; my = e.clientY / innerHeight - 0.5; }, {passive: true});
+  const resize = () => { renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); };
+  addEventListener('resize', resize); resize();
+
+  const anchor = document.getElementById('logoAnchor');
+  const slots = [document.getElementById('monoB')];
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const clock = new THREE.Clock();
+
+  function frame() {
+    const t = reduce ? 1.2 : clock.getElapsedTime();
+    u.uTime.value = t;
+
+    // Logo extruido: ocupa el lugar del logo de la portada; al bajar gira hacia atrás y se aleja
+    const ar = anchor.getBoundingClientRect();
+    const hp = clamp(-ar.top / (innerHeight * 0.8));
+    if (word && star) {
+      const w = toWorld(ar);
+      // Todo el grupo sigue el lugar del logo, el mouse y el scroll
+      heroGroup.scale.setScalar(Math.max(0.0001, (w.w / word.userData.width) * (1 - hp * 0.35)));
+      heroGroup.position.set(w.x, w.y + hp * 0.6, -hp * 2);
+      heroGroup.rotation.x = my * 0.25 + Math.sin(t * 0.7) * 0.04 - hp * 1.1;
+      heroGroup.rotation.z = 0;
+      heroGroup.visible = ar.bottom > -innerHeight * 0.3;
+      blob.position.set(w.x, w.y, -3);
+
+      // Ciclo de 9 s, como el video de referencia:
+      // destello girando → gira de canto y se vuelve el logo → el logo se queda → gira de canto y vuelve a destello
+      const easeIO = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+      const back = (x) => { const c = 1.6; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+      const c = reduce ? 4 : t % 9;
+      const starSize = word.userData.width * 0.42 / star.userData.width;
+      let showWord, spin;
+      if (c < 1.6) { showWord = false; spin = c * 1.2; }                                         // destello girando suave
+      else if (c < 2.2) { showWord = false; spin = 1.92 + easeIO((c - 1.6) / 0.6) * (Math.PI * 2.5 - 1.92); } // acelera hasta quedar de canto
+      else if (c < 3.1) { showWord = true; spin = -Math.PI / 2 * (1 - back((c - 2.2) / 0.9)); }  // el logo sale de canto con rebote
+      else if (c < 7.0) { showWord = true; spin = Math.sin((c - 3.1) * 0.9) * 0.12; }            // el logo se queda
+      else if (c < 7.6) { showWord = true; spin = Math.sin(3.9 * 0.9) * 0.12 + easeIO((c - 7.0) / 0.6) * (Math.PI / 2); } // gira hasta quedar de canto
+      else { showWord = false; spin = -Math.PI / 2 * (1 - back((c - 7.6) / 1.4)); }             // vuelve el destello
+      word.visible = showWord;
+      star.visible = !showWord;
+      word.rotation.y = showWord ? spin + mx * 0.45 : 0;
+      star.scale.setScalar(starSize * (c < 2.2 ? 1 - 0.25 * clamp((c - 1.6) / 0.6) : 1));
+      star.rotation.y = !showWord ? spin + mx * 0.3 : 0;
+      star.rotation.z = !showWord ? Math.sin(t * 0.9) * 0.25 : 0;
+    }
+    const bs = (innerWidth < 900 ? 1.2 : 1.9) * (1 - hp * 0.6);
+    blob.scale.setScalar(Math.max(0.0001, bs));
+    u.uAmp.value = 0.1 + hp * 0.22;
+    blob.rotation.y = t * 0.1;
+    blob.visible = hp < 1;
+
+    // Monograma: aparece girando en el lugar libre más cercano al centro de la pantalla
+    if (mono) {
+      let best = null, bestD = Infinity;
+      slots.forEach((el) => { const r = el.getBoundingClientRect(); const d = Math.abs((r.top + r.height / 2) / innerHeight - 0.5); if (d < bestD) { bestD = d; best = r; } });
+      const k = clamp(1 - bestD / 0.6);
+      const w = toWorld(best);
+      const s = (w.w * 0.62 / mono.userData.width) * (0.6 + 0.4 * k);
+      mono.scale.setScalar(Math.max(0.0001, s * (k > 0.01 ? 1 : 0)));
+      mono.position.set(w.x, w.y, 0);
+      mono.rotation.y = (1 - k) * Math.PI + t * 0.5 + mx * 0.5;
+      mono.rotation.x = my * 0.3 + Math.sin(t * 0.8) * 0.06;
+      mono.visible = k > 0.01;
+    }
+
+    // Títulos de cromo: siguen su lugar en la página. Al aparecer entran girando y "fundidos"
+    // (metal líquido que se ondula y se asienta), como los números del ejemplo Halo.
+    const pxToWorld = 2 * halfH() / innerHeight;
+    const backOut = (x) => { const k = 1.4; return 1 + (k + 1) * Math.pow(x - 1, 3) + k * Math.pow(x - 1, 2); };
+    heads.forEach((hd) => {
+      const r = hd.el.getBoundingClientRect();
+      const onScreen = r.bottom > -40 && r.top < innerHeight + 40;
+      hd.holder.visible = onScreen;
+      if (!onScreen) return;
+      if (hd.t0 < 0 && r.top < innerHeight * 0.88) hd.t0 = t;
+      const a = reduce ? 1 : hd.t0 < 0 ? 0 : clamp((t - hd.t0) / 1.5);
+      const ppu = Math.min(r.width / hd.w, r.height / hd.h);           // píxeles por unidad del modelo
+      const cx = r.left + (hd.w * ppu) / 2, cy = r.top + r.height / 2;
+      hd.holder.scale.setScalar(ppu * pxToWorld * (0.92 + 0.08 * a));
+      hd.holder.position.set(((cx / innerWidth) * 2 - 1) * halfH() * camera.aspect, -((cy / innerHeight) * 2 - 1) * halfH(), 0);
+      hd.holder.rotation.y = (1 - backOut(a)) * -1.25 + mx * 0.18 + Math.sin(t * 0.55 + hd.idx) * 0.045;
+      hd.holder.rotation.x = (1 - a) * 0.35 + my * 0.12 + Math.sin(t * 0.7 + hd.idx) * 0.025;
+      hd.mat.userData.u.uTime.value = t;
+      hd.mat.userData.u.uAmp.value = reduce ? 0 : 0.06 + 0.94 * Math.pow(1 - a, 2);
+      hd.mat.opacity = 1;
+      hd.holder.visible = a > 0 || reduce;
+    });
+
+    // Luz que barre el cromo de lado a lado
+    sweep.position.set(Math.sin(t * 0.6) * 7, 2 + Math.cos(t * 0.4), 4);
+    renderer.render(scene, camera);
+    if (!reduce) requestAnimationFrame(frame);
+  }
+  if (reduce) addEventListener('scroll', () => requestAnimationFrame(frame), {passive: true});
+  frame();
+</script>
+
+</body></html>
