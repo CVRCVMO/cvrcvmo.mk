@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hustler's Ambition 3D</title>
+<meta name="description" content="Ejemplo de anuncio 3D que se mueve al inclinar el celular. Hecho por CVRCVMO Marketing.">
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; background: #050505; overflow: hidden; }
+  body { font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; color: #F5F5F7; -webkit-font-smoothing: antialiased; }
+  .stage { position: fixed; inset: 0; margin: auto; height: 100svh; width: min(100vw, 56.25svh); overflow: hidden; perspective: 1100px; background: #0A0A0A; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .layer { position: absolute; left: 50%; top: 50%; will-change: transform; pointer-events: none; }
+  .bg { width: 132%; transform: translate(-50%, -50%); }
+  .bg img { width: 100%; display: block; }
+  .shadow { width: 96%; opacity: .62; filter: blur(6px); }
+  .shadow img { width: 100%; display: block; filter: brightness(0); -webkit-mask-image: url(sombra.webp); mask-image: url(sombra.webp); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+  .shirt { width: 92%; transform-style: preserve-3d; }
+  .shirt img { width: 100%; display: block; }
+  .gloss, .shade { position: absolute; inset: 0; -webkit-mask-image: url(playera.webp); mask-image: url(playera.webp); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
+  .gloss { background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,.26) 50%, transparent 62%); background-size: 300% 100%; mix-blend-mode: screen; }
+  .shade { background: linear-gradient(90deg, rgba(0,0,0,.22), transparent 45%, transparent 55%, rgba(0,0,0,.22)); background-size: 200% 100%; mix-blend-mode: multiply; }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .fade { position: absolute; inset: 0; pointer-events: none; background:
+      linear-gradient(#000 0%, rgba(0,0,0,.85) 9%, transparent 26%),
+      linear-gradient(transparent 72%, rgba(0,0,0,.92) 86%, #000 100%); }
+  .logo { position: absolute; top: 4.8%; left: 50%; width: 68%; transform: translateX(-50%); pointer-events: none; }
+  .copy { position: absolute; left: 0; right: 0; bottom: 6%; text-align: center; padding-inline: 16px; pointer-events: none; }
+  .copy small { display: block; font-size: clamp(11px, 2.4svh * .56, 15px); letter-spacing: .32em; color: #C8C8CD; margin-bottom: .6em; font-weight: 500; }
+  .copy b { display: block; font-size: clamp(24px, 4.4svh, 46px); font-weight: 700; letter-spacing: -.01em; line-height: 1.05; }
+  #enable { position: absolute; left: 50%; bottom: 20%; transform: translateX(-50%); border: 1px solid rgba(245,245,247,.55); background: rgba(10,10,10,.55); color: #F5F5F7; font: 500 15px/1 inherit; font-family: inherit; padding: 14px 22px; border-radius: 999px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); cursor: pointer; white-space: nowrap; }
+  #enable[hidden] { display: none; }
+  .credit { position: absolute; right: 10px; bottom: 8px; font-size: 10px; color: rgba(245,245,247,.35); letter-spacing: .06em; }
+  .credit a { color: inherit; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="layer bg" id="bg"><img src="fondo.jpg" alt=""></div>
+  <div class="layer shadow" id="shadow"><img src="playera.webp" alt=""></div>
+  <div class="layer shirt" id="shirt">
+    <img src="playera.webp" alt="Playera blanca Hustler's Ambition con diseño Frenia">
+    <div class="shade" id="shade"></div>
+    <div class="gloss" id="gloss"></div>
+  </div>
+  <canvas id="dust"></canvas>
+  <div class="fade"></div>
+  <img class="logo" src="logo.webp" alt="Hustler's Ambition Clothing Store">
+  <div class="copy"><small>NUEVO DROP</small><b>Pídela por WhatsApp</b></div>
+  <button id="enable" type="button" hidden>Toca para moverla con tu celular</button>
+  <div class="credit"><a href="../">CVRCVMO Marketing</a></div>
+</div>
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var bg = document.getElementById('bg'), shadow = document.getElementById('shadow'), shirt = document.getElementById('shirt');
+  var gloss = document.getElementById('gloss'), shade = document.getElementById('shade'), btn = document.getElementById('enable');
+  var stage = document.getElementById('stage');
+
+  // tx, ty en -1..1: hacia dónde se inclina el teléfono (o el mouse / dedo)
+  var tx = 0, ty = 0, gx = 0, gy = 0, lastInput = -1e9, sensor = false;
+  var b0 = null, g0 = null;
+
+  function onOrient(e) {
+    if (e.beta == null || e.gamma == null) return;
+    var beta = e.beta, gamma = e.gamma;
+    if (b0 === null) { b0 = beta; g0 = gamma; }
+    // re-centrar poco a poco para que no se quede ladeado
+    b0 += (beta - b0) * 0.004; g0 += (gamma - g0) * 0.004;
+    gx = Math.max(-1, Math.min(1, (gamma - g0) / 22));
+    gy = Math.max(-1, Math.min(1, (beta - b0) / 22));
+    sensor = true; lastInput = performance.now(); btn.hidden = true;
+  }
+  // Escuchar siempre; en iPhone además hay que pedir permiso con un toque
+  addEventListener('deviceorientation', onOrient);
+  var needsPermission = typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function';
+  if (needsPermission) {
+    btn.hidden = false;
+    btn.addEventListener('click', function () {
+      DeviceOrientationEvent.requestPermission().then(function () { btn.hidden = true; }).catch(function () { btn.hidden = true; });
+    });
+  }
+
+  // Mouse o dedo como respaldo (computadora, o si no hay sensor)
+  stage.addEventListener('pointermove', function (e) {
+    if (sensor) return;
+    var r = stage.getBoundingClientRect();
+    gx = ((e.clientX - r.left) / r.width) * 2 - 1;
+    gy = ((e.clientY - r.top) / r.height) * 2 - 1;
+    lastInput = performance.now();
+  });
+
+  // Polvo al frente: se mueve más que todo (da la profundidad)
+  var cv = document.getElementById('dust'), ctx = cv.getContext('2d'), dpr = Math.min(devicePixelRatio || 1, 2), parts = [];
+  function size() { cv.width = cv.clientWidth * dpr; cv.height = cv.clientHeight * dpr; }
+  size(); addEventListener('resize', size);
+  for (var i = 0; i < 42; i++) parts.push({x: Math.random(), y: Math.random(), r: 0.6 + Math.random() * 2.2, a: 0.12 + Math.random() * 0.35, v: 0.004 + Math.random() * 0.01, p: Math.random() * 6.28});
+
+  var t0 = performance.now();
+  function frame(now) {
+    var t = (now - t0) / 1000;
+    var idle = now - lastInput > 2500;
+    var targetX = gx, targetY = gy;
+    if (idle && !reduce) { targetX = Math.sin(t * 0.75) * 0.7; targetY = Math.cos(t * 0.75) * 0.45; }
+    if (idle && reduce) { targetX = 0; targetY = 0; }
+    tx += (targetX - tx) * 0.08; ty += (targetY - ty) * 0.08;
+
+    var w = stage.clientWidth, h = stage.clientHeight;
+    var floatY = reduce ? 0 : Math.sin(t * 1.6) * h * 0.006;
+    bg.style.transform = 'translate(calc(-50% + ' + (-tx * w * 0.06) + 'px), calc(-50% + ' + (-ty * h * 0.025) + 'px))';
+    shirt.style.transform = 'translate(calc(-50% + ' + (tx * w * 0.025) + 'px), calc(-52% + ' + (ty * h * 0.012 + floatY) + 'px)) rotateY(' + (tx * 18) + 'deg) rotateX(' + (-ty * 12) + 'deg)';
+    shadow.style.transform = 'translate(calc(-50% + ' + (tx * w * 0.012 - tx * w * 0.035 + w * 0.02) + 'px), calc(-48% + ' + (ty * h * 0.006 + h * 0.022 - floatY * 0.6) + 'px)) rotateY(' + (tx * 10) + 'deg) scale(1.02)';
+    gloss.style.backgroundPosition = (50 - tx * 70) + '% 0';
+    shade.style.backgroundPosition = (50 + tx * 50) + '% 0';
+
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    for (var k = 0; k < parts.length; k++) {
+      var p = parts[k];
+      var y = ((p.y - t * p.v) % 1 + 1) % 1;
+      var x = (p.x + tx * 0.09 * (0.5 + p.r / 2)) ;
+      var a = p.a * (0.75 + 0.25 * Math.sin(t * 1.3 + p.p));
+      ctx.beginPath(); ctx.fillStyle = 'rgba(245,245,250,' + a + ')';
+      ctx.shadowColor = 'rgba(255,255,255,.6)'; ctx.shadowBlur = 6 * dpr;
+      ctx.arc(x * cv.width, (y + ty * 0.04) * cv.height, p.r * dpr * 1.4, 0, 6.283); ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
