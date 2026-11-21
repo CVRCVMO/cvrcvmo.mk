@@ -12,7 +12,7 @@
   body { font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif; color: #F5F5F7; -webkit-font-smoothing: antialiased; }
   .stage { position: fixed; inset: 0; margin: auto; height: 100svh; width: min(100vw, 56.25svh); overflow: hidden; perspective: 1100px; background: #0A0A0A; touch-action: none; user-select: none; -webkit-user-select: none; }
   .layer { position: absolute; left: 50%; top: 50%; will-change: transform; pointer-events: none; }
-  .bg { width: 132%; transform: translate(-50%, -50%); }
+  .bg { width: max(132%, 76svh); transform: translate(-50%, -50%); }
   .bg img { width: 100%; display: block; }
   .shadow { width: 96%; opacity: .62; filter: blur(6px); }
   .shadow img { width: 100%; display: block; filter: brightness(0); -webkit-mask-image: url(sombra.webp); mask-image: url(sombra.webp); -webkit-mask-size: 100% 100%; mask-size: 100% 100%; }
