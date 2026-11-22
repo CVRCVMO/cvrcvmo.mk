@@ -1,0 +1,134 @@
+[
+ {
+  "slug": "naci-pa-ganar",
+  "tipo": "hoodie",
+  "w": 1137,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0268
+  ],
+  "tela": "#0c0e12"
+ },
+ {
+  "slug": "only-cash",
+  "tipo": "playera",
+  "w": 1252,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0176
+  ],
+  "tela": "#e8eaed"
+ },
+ {
+  "slug": "2pac",
+  "tipo": "sudadera",
+  "w": 1209,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0301
+  ],
+  "tela": "#101010"
+ },
+ {
+  "slug": "santa-grifa",
+  "tipo": "playera",
+  "w": 1215,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0221
+  ],
+  "tela": "#e9ebee"
+ },
+ {
+  "slug": "snoop-dogg",
+  "tipo": "hoodie",
+  "w": 934,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0058
+  ],
+  "tela": "#0e1013"
+ },
+ {
+  "slug": "sayonara",
+  "tipo": "playera",
+  "w": 1213,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0221
+  ],
+  "tela": "#e9ebee"
+ },
+ {
+  "slug": "tyga",
+  "tipo": "playera",
+  "w": 1249,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0129
+  ],
+  "tela": "#0f0f0f"
+ },
+ {
+  "slug": "good-am",
+  "tipo": "playera",
+  "w": 1210,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0243
+  ],
+  "tela": "#e9ebee"
+ },
+ {
+  "slug": "el-vicio-y-la-fama",
+  "tipo": "hoodie",
+  "w": 983,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0253
+  ],
+  "tela": "#d7d7e1"
+ },
+ {
+  "slug": "charles-ans",
+  "tipo": "playera",
+  "w": 1254,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0153
+  ],
+  "tela": "#121212"
+ },
+ {
+  "slug": "grillz",
+  "tipo": "playera",
+  "w": 1209,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0243
+  ],
+  "tela": "#e8eaed"
+ },
+ {
+  "slug": "dont-be-dumb",
+  "tipo": "playera",
+  "w": 1331,
+  "h": 1024,
+  "cuello": [
+   0.5,
+   0.0335
+  ],
+  "tela": "#131417"
+ }
+]
