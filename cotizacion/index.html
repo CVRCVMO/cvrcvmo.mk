@@ -84,6 +84,9 @@
     .doc { box-shadow: none; max-width: none; padding: 0; border-radius: 0; }
     .block, .totals .pay50 { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .doc-head img { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .meta { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    .blocks { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+    .doc-head img { width: 200px !important; }
   }
 </style>
 </head>
@@ -120,7 +123,7 @@
     <fieldset id="recFields" hidden><legend>Pago recibido</legend>
       <div class="row"><label>Concepto<select name="concepto"><option value="anticipo">Anticipo (50%)</option><option value="liquidacion">Liquidación (50%)</option><option value="mensual1">Plan mensual · primera mitad</option><option value="mensual2">Plan mensual · segunda mitad</option><option value="otro">Otro</option></select></label>
       <label>Monto recibido<input name="monto" type="number" min="0" step="1"></label></div>
-      <label>Folio de la cotización<input name="ref" placeholder="CVR-2026-001"></label>
+      <label>Folio de la cotización<input name="ref" placeholder="CVR-261122-01"></label>
       <label>Referencia o clave de rastreo SPEI<input name="rastreo"></label>
     </fieldset>
 
@@ -210,8 +213,12 @@
 
   // Datos de la cuenta y folio guardados en este navegador
   ['banco', 'titular', 'clabe'].forEach(function (k) { var v = store.get('cvr_' + k); if (v !== null) f[k].value = v; f[k].addEventListener('input', function () { store.set('cvr_' + k, this.value); }); });
-  function nextFolio() { var n = +(store.get('cvr_folio') || 0) + 1; store.set('cvr_folio', n); return 'CVR-' + new Date().getFullYear() + '-' + String(n).padStart(3, '0'); }
-  f.folio.value = 'CVR-' + new Date().getFullYear() + '-' + String(+(store.get('cvr_folio') || 0) + 1).padStart(3, '0');
+  // Folio por fecha: CVR-AAMMDD-NN (NN = número del día). Así cualquier sesión o dispositivo puede numerar sin un contador compartido.
+  var ymd = (function () { var d = new Date(); return String(d.getFullYear()).slice(2) + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0'); })();
+  var folioKey = 'cvr_folio_' + ymd;
+  var folioN = function (n) { return 'CVR-' + ymd + '-' + String(n).padStart(2, '0'); };
+  function nextFolio() { var n = +(store.get(folioKey) || 0) + 1; store.set(folioKey, n); return folioN(n); }
+  f.folio.value = folioN(+(store.get(folioKey) || 0) + 1);
   f.fecha.value = iso(new Date());
   f.entrega.value = addDays(3);
   f.vigencia.value = LAUNCH ? '2026-11-30' : addDays(7);
@@ -275,7 +282,7 @@
   f.addEventListener('change', render);
   document.getElementById('printBtn').onclick = function () {
     // El folio se consume al guardar una cotización, para que el siguiente documento lleve un número nuevo
-    if (f.tipo.value === 'cot' && f.folio.value === 'CVR-' + new Date().getFullYear() + '-' + String(+(store.get('cvr_folio') || 0) + 1).padStart(3, '0')) nextFolio();
+    if (f.tipo.value === 'cot' && f.folio.value === folioN(+(store.get(folioKey) || 0) + 1)) nextFolio();
     window.print();
   };
   document.getElementById('newBtn').onclick = function () { f.folio.value = nextFolio(); render(); };
