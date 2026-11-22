@@ -212,7 +212,8 @@
   /* ---------- Antes y después (comparador) ---------- */
   .ba { position: relative; max-width: 980px; margin: 0 auto; border-radius: 26px; overflow: hidden; aspect-ratio: 16 / 10; background: #fff; border: 1px solid var(--line-light); box-shadow: 0 40px 80px -40px rgba(0,0,0,0.45); user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: ew-resize; }
   .ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
-  .ba-before { position: absolute; inset: 0; clip-path: inset(0 50% 0 0); }
+  .ba-before { position: absolute; top: 0; left: 0; bottom: 0; width: 50%; overflow: hidden; }
+  .ba-before .ba-img { right: auto; width: var(--baw, 100%); max-width: none; }
   .ba-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; background: #FFFFFF; box-shadow: 0 0 0 1px rgba(0,0,0,0.18); pointer-events: none; }
   .ba-line span { position: absolute; top: 50%; left: 50%; width: 58px; height: 58px; margin: -29px 0 0 -29px; border-radius: 50%; background: var(--chrome); color: #0A0A0B; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,0.35); }
   .ba-line svg { width: 26px; height: 26px; }
@@ -543,8 +544,8 @@
         <p data-en="When a business grows, its image gets left behind. This is how we would redesign a café in Playa del Carmen. Drag the line to compare. (Café Marea is a sample brand.)">Cuando un negocio crece, su imagen se queda atrás. Así rediseñaríamos un café de Playa del Carmen. Arrastre la línea para comparar. (Café Marea es una marca de muestra.)</p>
       </div>
       <div class="ba rise" id="ba">
-        <img class="ba-img" src="img/cafe-marea-despues.jpg" alt="Después: logo Marea con una ola, en arena y azul Caribe" data-en-alt="After: Marea logo with a wave, in sand and Caribbean blue" width="1600" height="1000" loading="lazy">
-        <div class="ba-before" id="baBefore"><img class="ba-img" src="img/cafe-marea-antes.jpg" alt="Antes: logo Cafe Marea con letras de colores y una taza" data-en-alt="Before: Cafe Marea logo with colorful letters and a cup" width="1600" height="1000" loading="lazy"></div>
+        <img class="ba-img" src="img/cafe-marea-despues.jpg" alt="Después: logo Marea con una ola, en arena y azul Caribe" data-en-alt="After: Marea logo with a wave, in sand and Caribbean blue" width="1600" height="1000" decoding="async">
+        <div class="ba-before" id="baBefore"><img class="ba-img" src="img/cafe-marea-antes.jpg" alt="Antes: logo Cafe Marea con letras de colores y una taza" data-en-alt="Before: Cafe Marea logo with colorful letters and a cup" width="1600" height="1000" decoding="async"></div>
         <div class="ba-line" id="baLine" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
         <span class="ba-tag l" data-en="Before">Antes</span><span class="ba-tag r" data-en="After">Después</span>
         <input class="sr" type="range" id="baRange" min="0" max="100" value="50" aria-label="Comparar antes y después" data-en-aria="Compare before and after">
@@ -888,7 +889,11 @@
     var ba = document.getElementById('ba'); if (!ba) return;
     var before = document.getElementById('baBefore'), line = document.getElementById('baLine'), range = document.getElementById('baRange');
     var drag = false, touched = false;
-    function set(p) { p = Math.max(0, Math.min(100, p)); before.style.clipPath = 'inset(0 ' + (100 - p) + '% 0 0)'; line.style.left = p + '%'; range.value = Math.round(p); }
+    // Se recorta por ancho (no con clip-path): así funciona igual en Safari de iPhone y en el navegador de Instagram
+    function set(p) { p = Math.max(0, Math.min(100, p)); before.style.width = p + '%'; line.style.left = p + '%'; range.value = Math.round(p); }
+    function fit() { ba.style.setProperty('--baw', ba.clientWidth + 'px'); }
+    fit(); addEventListener('resize', fit);
+    if ('ResizeObserver' in window) new ResizeObserver(fit).observe(ba);
     function at(e) { var r = ba.getBoundingClientRect(); return (e.clientX - r.left) / r.width * 100; }
     ba.addEventListener('pointerdown', function (e) { drag = touched = true; set(at(e)); });
     addEventListener('pointermove', function (e) { if (drag) set(at(e)); });

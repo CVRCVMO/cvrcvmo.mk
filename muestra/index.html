@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Muestra gratis · CVRCVMO Marketing</title>
+<meta name="description" content="Pida su muestra gratis por WhatsApp. CVRCVMO Marketing, Playa del Carmen.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0A0A0B">
+<link rel="icon" href="../img/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<style>
+  :root { color-scheme: dark; --night: #0A0A0B; --silver: #E8E9EC; --mist: #9C9CA3; --line: rgba(232,233,236,.14);
+    --chrome: linear-gradient(180deg, #FFFFFF 0%, #DADDE2 45%, #9EA5AF 52%, #F4F5F7 70%, #C9CDD3 100%); }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { min-height: 100%; background: var(--night); }
+  body { min-height: 100svh; display: grid; place-items: center; padding: 32px 16px; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--silver); text-align: center; -webkit-font-smoothing: antialiased; }
+  main { width: min(100%, 420px); }
+  img { width: 72px; height: 72px; border-radius: 18px; }
+  h1 { margin-top: 22px; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 34px; line-height: 1.1; }
+  p { margin-top: 12px; color: var(--mist); font-size: 16px; line-height: 1.5; }
+  .btn { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 28px; height: 56px; border-radius: 999px; background: var(--chrome); color: #0A0A0B; font-weight: 700; font-size: 16px; text-decoration: none; }
+  .btn svg { width: 22px; height: 22px; }
+  .msg { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 16px; font-size: 14px; color: var(--silver); text-align: left; }
+  .msg small { display: block; color: var(--mist); font-size: 12px; margin-bottom: 4px; }
+  .site { display: inline-block; margin-top: 26px; color: var(--mist); font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <img src="../img/icon-512.png" alt="CVRCVMO Marketing">
+  <h1>Su muestra gratis</h1>
+  <p id="status">Le estamos abriendo WhatsApp con el mensaje ya escrito.</p>
+  <a class="btn" id="go" href="https://wa.me/529843182480">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
+    Abrir WhatsApp
+  </a>
+  <div class="msg"><small>Mensaje que le llegará a Diego</small><span id="text"></span></div>
+  <a class="site" href="../">Ver la página, precios y garantía →</a>
+</main>
+<script>
+  // El link de la bio apunta aquí (sin texto en la dirección) porque Instagram vuelve a
+  // codificar el ?text= de WhatsApp y el mensaje llegaba como "Hola%20Diego%2C...".
+  // Aquí el texto se codifica una sola vez y se abre WhatsApp.
+  var TEXTO = 'Hola Diego, vi su Instagram y me gustaría una muestra gratis para mi negocio.';
+  var url = 'https://wa.me/529843182480?text=' + encodeURIComponent(TEXTO);
+  document.getElementById('text').textContent = TEXTO;
+  document.getElementById('go').href = url;
+  setTimeout(function () { location.href = url; }, 600);
+</script>
+</body>
+</html>
