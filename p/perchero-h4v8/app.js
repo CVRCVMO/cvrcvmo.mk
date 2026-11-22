@@ -27,21 +27,21 @@ const CATALOGO = {
 	grillz: {nombre: 'Grillz', precio: 550},
 	'dont-be-dumb': {nombre: 'Dont Be Dumb', extra: 'A$AP Rocky', precio: 550},
 };
-// canción de la portada de cada prenda (en Spotify). Suena en el reproductor de Spotify al abrir la prenda:
-// sin cuenta se oye un adelanto de 30 s; con Spotify abierto en ese navegador, la canción completa.
+// canción de cada prenda: a = artista(s), t = canción. Suena sola al abrir la prenda (adelanto oficial de 30 s;
+// se busca primero en Apple Music y si no, en Deezer). La página no guarda ningún audio.
 const MUSICA = {
-	'naci-pa-ganar': 'track:4ZhmkmypLDoBYffpsGdQoO', // Faruz Feet · Nací Pa' Ganar
-	'only-cash': 'track:119c93MHjrDLJTApCVGpvx', // Wu-Tang Clan · C.R.E.A.M. (por el tema del dinero, la prenda no trae artista)
-	'2pac': 'track:350yd4wKvmBYCRq0iakmP1', // 2Pac · California Love (Remix), la versión del álbum All Eyez On Me
-	'santa-grifa': 'track:0IBhXEEKXhv0bdpboaw5M3', // La Santa Grifa · Sabanas Blancas (álbum Frenia)
-	'snoop-dogg': 'track:2RVFoCRhydWZlmhQ83bkbg', // Down 4 My N's (C-Murder, Snoop Dogg y Magic), del álbum Top Dogg
+	'naci-pa-ganar': {a: ['Faruz Feet'], t: "Nací Pa' Ganar"},
+	'only-cash': {a: ['Wu-Tang Clan'], t: 'C.R.E.A.M.'},
+	'2pac': {a: ['2Pac'], t: 'Do For Love'},
+	'santa-grifa': {a: ['Santa Grifa'], t: 'Mi Propio Infierno'},
+	'snoop-dogg': {a: ['Snoop Dogg'], t: "Drop It Like It's Hot"},
 	sayonara: null, // falta saber de qué artista es
-	tyga: 'track:5IaHrVsrferBYDm0bDyABy', // Tyga · Taste (feat. Offset)
-	'good-am': 'track:6GnhWMhgJb7uyiiPEiEkDA', // Mac Miller · Weekend (feat. Miguel), álbum GO:OD AM
-	'el-vicio-y-la-fama': 'track:1N9fhsSQ5uiiFJWiEPpK6R', // Gera MX · El Catrín (álbum El Vicio y la Fama)
-	'charles-ans': 'track:1WhJWRZt4yHGtICCRZaJsb', // Charles Ans · Si Nunca Va a Amanecer
-	grillz: 'artist:2gBjLmx6zQnFGQJCAQpRgw', // Nelly (sus canciones más escuchadas)
-	'dont-be-dumb': 'track:2JfyjfqbQrTXMzH8n0fOht', // A$AP Rocky · DON'T BE DUMB / TRIP BABY
+	tyga: {a: ['Tyga', 'Justin Bieber'], t: 'Wait For A Minute'},
+	'good-am': {a: ['Mac Miller'], t: 'Weekend'},
+	'el-vicio-y-la-fama': {a: ['Gera MX'], t: 'Panteones y Calacas'},
+	'charles-ans': {a: ['Charles Ans'], t: 'Si Nunca Va a Amanecer'},
+	grillz: {a: ['Nelly'], t: 'Grillz'},
+	'dont-be-dumb': {a: ['A$AP Rocky'], t: 'Stay Here 4 Life'},
 };
 const LINEA = {playera: 'Playera boxy fit', hoodie: 'Hoodie', sudadera: 'Sudadera'};
 const ALTO = {playera: 0.7, sudadera: 0.7, hoodie: 0.86}; // metros
@@ -89,7 +89,7 @@ const ui = {
 	badge: $('badge'), cartBtn: $('cartBtn'), tabs: $('tabs'), top: document.querySelector('.top'),
 	fly: $('fly'), touch: $('touch'), ripple: $('ripple'), outro: $('outro'), intro: $('intro'), loader: $('loader'), bar: $('bar'),
 	sizes: [...$('sizes').children], add: $('addBtn'), items: $('items'), total: $('total'),
-	sp: $('sp'),
+	sound: $('soundBtn'), hideBtn: $('hideBtn'), showBtn: $('showBtn'),
 	pName: $('pName'), pLine: $('pLine'), pPrice: $('pPrice'), pSizeTxt: $('pSizeTxt'), pKicker: $('pKicker'),
 };
 ui.hint.textContent = FINE ? 'Pasa el mouse por el perchero · clic para verla' : 'Desliza el dedo por el perchero · toca una prenda';
@@ -611,52 +611,143 @@ const halo = new THREE.Sprite(new THREE.SpriteMaterial({map: radialTexture([[0, 
 halo.renderOrder = 3;
 scene.add(halo);
 
-// ---------------------------------------------------------------- música (reproductor de Spotify)
+// ---------------------------------------------------------------- música
 const music = (() => {
 	const off = {play() {}, stop() {}, step() {}, prefetch() {}};
 	if (VIDEO) return off;
-	let ctl = null, want = null, pending = false, timer = 0;
-	const box = ui.sp;
-	window.onSpotifyIframeApiReady = (api) => {
-		const first = Object.values(MUSICA).find(Boolean);
-		api.createController(document.getElementById('spEmbed'), {uri: 'spotify:' + first, width: '100%', height: 80}, (c) => {
-			ctl = c;
-			c.addListener('ready', () => {
-				if (pending && want) {
-					pending = false;
-					c.play();
-				}
-			});
-			if (want) load(want);
+	const audio = new Audio();
+	audio.preload = 'auto';
+	let on = true;
+	try {
+		on = localStorage.getItem('ha-musica') !== '0';
+	} catch (e) {}
+	const songs = {}; // slug -> promesa con la lista de urls de adelanto
+	let cur = null, want = 0, vol = 0, token = 0, unlocked = false, n = 0;
+	const jsonp = (url, cbParam = 'callback') =>
+		new Promise((res, rej) => {
+			const cb = '__ha_cb' + ++n, s = document.createElement('script');
+			const done = () => {
+				clearTimeout(tm);
+				delete window[cb];
+				s.remove();
+			};
+			const tm = setTimeout(() => (done(), rej(new Error('tiempo'))), 9000);
+			window[cb] = (d) => (done(), res(d));
+			s.onerror = () => (done(), rej(new Error('red')));
+			s.src = url + (url.includes('?') ? '&' : '?') + cbParam + '=' + cb;
+			document.head.appendChild(s);
 		});
+	const norm = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g, '');
+	const okArtist = (m, name) => m.a.some((a) => norm(name).includes(norm(a)));
+	const okTitle = (m, name) => norm(name).includes(norm(m.t));
+	async function apple(m) {
+		const term = encodeURIComponent(m.a[0] + ' ' + m.t);
+		const r = await jsonp(`https://itunes.apple.com/search?media=music&entity=song&limit=25&term=${term}`);
+		const hit = (r.results || []).find((x) => x.previewUrl && okArtist(m, x.artistName) && okTitle(m, x.trackName));
+		return hit && hit.previewUrl;
+	}
+	async function deezer(m) {
+		const q = encodeURIComponent(`artist:"${m.a[0]}" track:"${m.t}"`);
+		let r = await jsonp(`https://api.deezer.com/search?q=${q}&output=jsonp`);
+		let hit = (r.data || []).find((x) => x.preview && okArtist(m, x.artist && x.artist.name) && okTitle(m, x.title));
+		if (!hit) {
+			r = await jsonp(`https://api.deezer.com/search?q=${encodeURIComponent(m.a[0] + ' ' + m.t)}&output=jsonp`);
+			hit = (r.data || []).find((x) => x.preview && okArtist(m, x.artist && x.artist.name) && okTitle(m, x.title));
+		}
+		return hit && hit.preview;
+	}
+	const get = (slug) => {
+		if (!songs[slug]) {
+			const m = MUSICA[slug];
+			const p = !m ? Promise.resolve([]) : Promise.all([apple(m).catch(() => null), deezer(m).catch(() => null)]).then((l) => l.filter(Boolean));
+			p.then((l) => (p.done = l));
+			songs[slug] = p;
+		}
+		return songs[slug];
 	};
-	const load = (uri) => {
-		if (!ctl) return;
-		pending = true;
-		ctl.loadUri('spotify:' + uri);
-		clearTimeout(timer);
-		// por si el evento 'ready' no llega después de cambiar de canción
-		timer = setTimeout(() => pending && want === uri && ((pending = false), ctl.play()), 1500);
-	};
+	// iPhone: el audio solo arranca con un toque; el primer toque "desbloquea" este reproductor
+	const silent = 'data:audio/wav;base64,UklGRrQBAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YZABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+	addEventListener('pointerdown', () => {
+		if (unlocked) return;
+		unlocked = true;
+		if (!audio.src) {
+			audio.src = silent;
+			audio.play().then(() => audio.pause()).catch(() => {});
+		}
+	}, {capture: true});
+	function refresh() {
+		ui.sound.classList.toggle('off', !on);
+		ui.sound.setAttribute('aria-label', on ? 'Silenciar música' : 'Activar música');
+		ui.sound.hidden = !cur || !cur.urls || !cur.urls.length;
+	}
+	function start() {
+		if (!cur || !cur.urls || !cur.urls.length || !on) return;
+		const url = cur.urls[cur.k || 0];
+		if (audio.src !== url) audio.src = url;
+		if (!audio.paused && audio.src === url) return;
+		vol = 0;
+		try {
+			audio.volume = 0;
+		} catch (e) {}
+		want = 0.85;
+		audio.play().catch(() => {});
+	}
+	// si una fuente no carga, probar con la otra
+	audio.addEventListener('error', () => {
+		if (cur && cur.urls && audio.src === cur.urls[cur.k || 0] && (cur.k || 0) + 1 < cur.urls.length) {
+			cur.k = (cur.k || 0) + 1;
+			start();
+		}
+	});
+	// por si el navegador no dejó arrancar el audio en el primer evento: reintentar en el toque/clic
+	const kick = () => cur && audio.paused && start();
+	canvas.addEventListener('click', kick);
+	canvas.addEventListener('touchend', kick, {passive: true});
+	ui.sound.addEventListener('click', () => {
+		on = !on;
+		try {
+			localStorage.setItem('ha-musica', on ? '1' : '0');
+		} catch (e) {}
+		if (!on) {
+			want = 0;
+			audio.pause();
+		} else start();
+		refresh();
+	});
 	return {
 		prefetch() {
-			const s = document.createElement('script');
-			s.src = 'https://open.spotify.com/embed/iframe-api/v1';
-			s.async = true;
-			document.head.appendChild(s);
+			// de a poco para no saturar las búsquedas
+			Object.keys(MUSICA).forEach((slug, i) => setTimeout(() => get(slug), i * 250));
 		},
 		play(g) {
-			want = MUSICA[g.slug] || null;
-			if (box) box.classList.toggle('on', !!want);
-			if (want) load(want);
+			const t = ++token;
+			cur = {g, urls: null, k: 0};
+			refresh();
+			const go = (urls) => {
+				if (t !== token) return;
+				cur.urls = urls;
+				refresh();
+				start();
+			};
+			const p = get(g.slug);
+			// si ya se tiene la canción se toca en este mismo toque (así lo pide el iPhone)
+			if (p.done !== undefined) go(p.done);
+			else p.then(go);
 		},
 		stop() {
-			want = null;
-			pending = false;
-			clearTimeout(timer);
-			if (ctl) ctl.pause();
+			const t = ++token;
+			cur = null;
+			want = 0;
+			refresh();
+			setTimeout(() => t === token && audio.pause(), 600);
 		},
-		step() {},
+		step(dt) {
+			if (audio.paused) return;
+			vol = damp(vol, want, want > vol ? 2.5 : 8, dt);
+			try {
+				audio.volume = clamp(vol, 0, 1);
+			} catch (e) {}
+		},
 	};
 })();
 
@@ -686,6 +777,8 @@ const S = {
 	down: null,
 	lastInput: -1e9,
 	attract: {i: -1, until: 0, next: 3, k: 0},
+	hide: 0,
+	hideE: 0,
 	light: VIDEO ? 0 : 1,
 	uiE: VIDEO ? 0 : 1,
 	cam: {lookX: 0, lookY: 0.9, dist: 6, elev: 0.08, yaw: 0},
@@ -730,11 +823,16 @@ function showcase(g, out) {
 	const vf = THREE.MathUtils.degToRad(cam.fov) / 2;
 	const portrait = isPortrait();
 	const span = g.top - g.bottom;
-	const frac = portrait ? 0.4 : 0.6;
-	const d = span / (frac * 2 * Math.tan(vf));
+	// con los detalles ocultos la prenda se agranda y se centra
+	const hd = ease(S.hideE);
+	const t2 = 2 * Math.tan(vf);
+	const dShow = span / ((portrait ? 0.4 : 0.6) * t2);
+	// más grande, pero sin salirse a los lados (en vertical la pantalla es angosta) y nunca más chica
+	const dFit = Math.max(span / ((portrait ? 0.62 : 0.74) * t2), g.W / (0.94 * t2 * cam.aspect));
+	const d = lerp(dShow, Math.min(dShow, dFit), hd);
 	const halfH = d * Math.tan(vf), halfW = halfH * cam.aspect;
-	const ndcX = portrait ? 0 : -0.3;
-	const ndcY = portrait ? 0.26 : -0.02;
+	const ndcX = portrait ? 0 : lerp(-0.3, 0, hd);
+	const ndcY = portrait ? lerp(0.26, 0.02, hd) : -0.02;
 	const mid = (g.top + g.bottom) / 2;
 	out.set(ndcX * halfW, ndcY * halfH - mid, -d).applyMatrix4(cam.matrixWorld);
 	return d;
@@ -761,6 +859,7 @@ function select(g) {
 	S.spin.vel = 0;
 	S.spinAuto = 0;
 	S.size = null;
+	S.hide = 0;
 	ui.sizes.forEach((b) => b.setAttribute('aria-pressed', 'false'));
 	ui.pSizeTxt.textContent = 'Elige una';
 	ui.pKicker.textContent = g.tipo === 'playera' ? 'Nuevo drop · Boxy fit' : 'Nuevo drop';
@@ -914,6 +1013,8 @@ if (!VIDEO) {
 		}
 	});
 	ui.back.addEventListener('click', deselect);
+	ui.hideBtn.addEventListener('click', () => ((S.hide = 1), log('tap')));
+	ui.showBtn.addEventListener('click', () => ((S.hide = 0), log('tap')));
 	ui.sizes.forEach((b, i) => b.addEventListener('click', () => chooseSize(i)));
 	ui.add.addEventListener('click', addToCart);
 	ui.cartBtn.addEventListener('click', () => (S.drawerOpen = S.drawerOpen ? 0 : 1));
@@ -1023,10 +1124,16 @@ function updateUI(dt) {
 	}
 	// ficha del producto
 	S.panelE = damp(S.panelE, S.sel && S.selTarget ? 1 : 0, 9, dt);
-	const pe = S.panelE;
-	ui.panel.style.opacity = pe.toFixed(3);
-	ui.panel.style.transform = portrait ? `translateY(${((1 - pe) * 60).toFixed(1)}px)` : `translate(${((1 - pe) * 40).toFixed(1)}px, -50%)`;
-	ui.panel.classList.toggle('on', pe > 0.5);
+	S.hideE = damp(S.hideE, S.sel && S.hide ? 1 : 0, 8, dt);
+	const pe = S.panelE, he = S.hideE;
+	const ph = ui.panel.offsetHeight + 30;
+	ui.panel.style.opacity = (pe * (1 - he * 0.85)).toFixed(3);
+	ui.panel.style.transform = portrait ? `translateY(${((1 - pe) * 60 + he * ph).toFixed(1)}px)` : `translate(${((1 - pe) * 40 + he * (ui.panel.offsetWidth + 40)).toFixed(1)}px, -50%)`;
+	ui.panel.classList.toggle('on', pe > 0.5 && he < 0.5);
+	const se = pe * he;
+	ui.showBtn.style.opacity = se.toFixed(3);
+	ui.showBtn.style.transform = `translate(-50%, ${((1 - se) * 16).toFixed(1)}px)`;
+	ui.showBtn.classList.toggle('on', se > 0.5);
 	ui.back.style.opacity = pe.toFixed(3);
 	ui.back.classList.toggle('on', pe > 0.5);
 	if (S.sizeNudge) {
