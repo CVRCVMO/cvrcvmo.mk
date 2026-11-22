@@ -204,7 +204,11 @@
 
 <div class="loader" id="loader"><img src="logo.webp" alt=""><div class="bar"><i id="bar"></i></div></div>
 
-<script type="module" src="app.js"></script>
+<script>
+  // si algo falla al arrancar, avisar en lugar de quedarse en la pantalla de carga
+  addEventListener('error', () => { const l = document.getElementById('loader'); if (l && l.style.display !== 'none' && !l.querySelector('.err')) l.insertAdjacentHTML('beforeend', '<p class="err">Algo falló al cargar. Recarga la página.</p>'); });
+</script>
+<script type="module" src="app.js?v=2026112203"></script>
 <noscript><p class="err">Esta página necesita JavaScript para mostrar el perchero 3D.</p></noscript>
 </body>
 </html>

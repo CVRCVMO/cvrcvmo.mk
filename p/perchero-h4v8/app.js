@@ -647,7 +647,7 @@ const music = (() => {
 		},
 		play(g) {
 			want = MUSICA[g.slug] || null;
-			box.classList.toggle('on', !!want);
+			if (box) box.classList.toggle('on', !!want);
 			if (want) load(want);
 		},
 		stop() {
