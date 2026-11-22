@@ -209,6 +209,34 @@
   .seal .spin { transform-origin: 60px 60px; }
   @media (prefers-reduced-motion: no-preference) { .seal .spin { animation: spin 22s linear infinite; } @keyframes spin { to { transform: rotate(360deg); } } }
 
+  /* ---------- Antes y después (comparador) ---------- */
+  .ba { position: relative; max-width: 980px; margin: 0 auto; border-radius: 26px; overflow: hidden; aspect-ratio: 16 / 10; background: #fff; border: 1px solid var(--line-light); box-shadow: 0 40px 80px -40px rgba(0,0,0,0.45); user-select: none; -webkit-user-select: none; touch-action: pan-y; cursor: ew-resize; }
+  .ba-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+  .ba-before { position: absolute; inset: 0; clip-path: inset(0 50% 0 0); }
+  .ba-line { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; margin-left: -1px; background: #FFFFFF; box-shadow: 0 0 0 1px rgba(0,0,0,0.18); pointer-events: none; }
+  .ba-line span { position: absolute; top: 50%; left: 50%; width: 58px; height: 58px; margin: -29px 0 0 -29px; border-radius: 50%; background: var(--chrome); color: #0A0A0B; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,0.35); }
+  .ba-line svg { width: 26px; height: 26px; }
+  .ba-tag { position: absolute; top: 16px; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; pointer-events: none; }
+  .ba-tag.l { left: 16px; background: #B4442E; color: #FFFFFF; }
+  .ba-tag.r { right: 16px; background: #14181A; color: #EDE3D1; }
+  .ba:focus-within { outline: 1.5px solid var(--gold); outline-offset: 4px; }
+  .ba-notes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 30px; align-items: end; max-width: 980px; margin: 30px auto 0; }
+  .ba-notes b { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-ink); font-weight: 500; }
+  .ba-notes p { color: var(--stone); margin-top: 6px; }
+
+  /* ---------- Hecho para su negocio ---------- */
+  .niches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; perspective: 1600px; }
+  .niche { background: var(--paper); border: 1px solid var(--line-light); border-radius: 22px; padding: 28px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .niche svg { width: 34px; height: 34px; color: var(--gold-ink); }
+  .niche h3 { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; line-height: 1.05; }
+  .niche p { color: var(--stone); font-size: 0.95rem; }
+  .niche .start { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line-light); font-weight: 600; font-size: 0.95rem; }
+  .niche .start small { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--stone); font-weight: 500; margin-bottom: 2px; }
+  .audit { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center; background: var(--night); color: var(--silver); border-radius: 22px; padding: 30px 32px; }
+  .audit .label { color: var(--gold); }
+  .audit h3 { font-family: var(--serif); font-weight: 400; font-size: 2.1rem; line-height: 1.05; margin: 8px 0 6px; color: #FFFFFF; }
+  .audit p { color: var(--mist); max-width: 62ch; }
+
   /* ---------- Servicios ---------- */
   .svc-list { border-top: 1px solid var(--ink); }
   .svc { display: grid; grid-template-columns: 70px minmax(0, 4fr) minmax(0, 5fr) minmax(0, 2fr) auto; gap: 24px; align-items: baseline; padding-block: 26px; border-bottom: 1px solid var(--line-light); transition: background 0.3s ease; }
@@ -384,6 +412,9 @@
     .compare td, .compare thead th { width: auto; }
     .compare tbody tr:last-child .us { border-radius: 0 0 14px 0; }
   }
+  @media (max-width: 1000px) { .niches { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .ba-notes, .audit { grid-template-columns: minmax(0, 1fr); } .ba-notes .btn, .audit .btn { justify-self: start; } .ba-line span { width: 48px; height: 48px; margin: -24px 0 0 -24px; } }
+  @media (max-width: 560px) { .niches { grid-template-columns: minmax(0, 1fr); } .audit { padding: 26px 22px; } }
   @media print {
     #stage, .top, .carousel-ctrl, .wa-float, .quote { display: none !important; }
     .has3d .hero-logo, .has3d .mono-slot img { opacity: 1 !important; }
@@ -504,11 +535,33 @@
     </div>
   </section>
 
+  <!-- ANTES Y DESPUÉS (claro, comparador que se arrastra) -->
+  <section id="antes" class="light" style="padding-top:20px">
+    <div class="wrap">
+      <div class="head rise">
+        <div><span class="label" data-en="02 — Before &amp; after">02 — Antes y después</span><h2 class="chrome-h" data-h="antes" data-en="Before<br>&amp; after">Antes y<br>después</h2></div>
+        <p data-en="When a business grows, its image gets left behind. This is how we would redesign a café in Playa del Carmen. Drag the line to compare. (Café Marea is a sample brand.)">Cuando un negocio crece, su imagen se queda atrás. Así rediseñaríamos un café de Playa del Carmen. Arrastre la línea para comparar. (Café Marea es una marca de muestra.)</p>
+      </div>
+      <div class="ba rise" id="ba">
+        <img class="ba-img" src="img/cafe-marea-despues.jpg" alt="Después: logo Marea con una ola, en arena y azul Caribe" data-en-alt="After: Marea logo with a wave, in sand and Caribbean blue" width="1600" height="1000" loading="lazy">
+        <div class="ba-before" id="baBefore"><img class="ba-img" src="img/cafe-marea-antes.jpg" alt="Antes: logo Cafe Marea con letras de colores y una taza" data-en-alt="Before: Cafe Marea logo with colorful letters and a cup" width="1600" height="1000" loading="lazy"></div>
+        <div class="ba-line" id="baLine" aria-hidden="true"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span></div>
+        <span class="ba-tag l" data-en="Before">Antes</span><span class="ba-tag r" data-en="After">Después</span>
+        <input class="sr" type="range" id="baRange" min="0" max="100" value="50" aria-label="Comparar antes y después" data-en-aria="Compare before and after">
+      </div>
+      <div class="ba-notes rise">
+        <div><b data-en="Before">Antes</b><p data-en="Three fonts fighting each other, colors that say nothing about the place, unreadable when small.">Tres tipografías peleando, colores que no dicen nada del lugar e ilegible en chico.</p></div>
+        <div><b data-en="After">Después</b><p data-en="One elegant font, Caribbean colors and a symbol that works even on a cup or a profile picture.">Una sola tipografía elegante, colores del Caribe y un símbolo que funciona hasta en un vaso o en la foto de perfil.</p></div>
+        <a class="btn ink" data-wa="marca" href="https://wa.me/529843182480" target="_blank" rel="noopener" data-en="See how my brand would look">Ver cómo se vería mi marca</a>
+      </div>
+    </div>
+  </section>
+
   <!-- GARANTÍA (oscura) -->
   <section id="garantia" class="dark guarantee">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="02 — Guarantee">02 — Garantía</span><h2 class="chrome-h" data-h="garantia" data-en="Zero risk<br>for you.">Cero riesgo<br>para usted.</h2></div>
+        <div><span class="label" data-en="03 — Guarantee">03 — Garantía</span><h2 class="chrome-h" data-h="garantia" data-en="Zero risk<br>for you.">Cero riesgo<br>para usted.</h2></div>
         <p data-en="We know it's hard to trust a studio you just met. That's why we take the risk, not you.">Sabemos que no es fácil confiar en un estudio que acaba de conocer. Por eso el riesgo lo tomamos nosotros, no usted.</p>
       </div>
       <div class="g-grid">
@@ -551,11 +604,35 @@
     </div>
   </section>
 
-  <!-- SERVICIOS (claro) -->
-  <section id="servicios" class="light">
+  <!-- HECHO PARA SU NEGOCIO (claro) -->
+  <section id="para" class="light">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="03 — Services">03 — Servicios</span><h2 class="chrome-h" data-h="servicios" data-en="Services<br>&amp; pricing">Servicios<br>y precios</h2></div>
+        <div><span class="label" data-en="04 — Made for you">04 — Para su negocio</span><h2 class="chrome-h" data-h="para" data-en="Made for<br>your business">Hecho para<br>su negocio</h2></div>
+        <p data-en="We work with the businesses of Playa del Carmen: we know what your customers look for before visiting you and what makes them choose you.">Trabajamos con los negocios de Playa del Carmen: sabemos qué buscan sus clientes antes de visitarlo y qué los hace elegirlo.</p>
+      </div>
+      <div class="niches">
+        <article class="niche flip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M4 9h13v5a6 6 0 01-6 6H10a6 6 0 01-6-6V9z"/><path d="M17 11h1.5a2.5 2.5 0 010 5H17"/><path d="M8 3c0 1.5 1 1.5 1 3M12 3c0 1.5 1 1.5 1 3"/></svg><h3 data-en="Cafés &amp; restaurants">Cafés y restaurantes</h3><p data-en="Your menu animated in Spanish and English, your dishes on video and a website with menu, location and WhatsApp.">Su menú animado en español e inglés, sus platillos en video y una página con menú, ubicación y WhatsApp.</p><span class="start"><small data-en="Start with">Empiece con</small><span data-en="Menu explainer video">Video informativo del menú</span></span></article>
+        <article class="niche flip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 1.8L21.5 18.5l-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/></svg><h3 data-en="Beauty &amp; nails">Belleza y uñas</h3><p data-en="A brand that looks as good as your work: logo, colors and reels of your designs.">Una marca que se vea al nivel de su trabajo: logo, colores y reels de sus diseños.</p><span class="start"><small data-en="Start with">Empiece con</small><span data-en="Logo + brand kit">Logo + kit de marca</span></span></article>
+        <article class="niche flip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 7a2 2 0 112-2"/><path d="M12 7v2L3 16h18l-9-7"/></svg><h3 data-en="Boutiques &amp; fashion brands">Boutiques y marcas de ropa</h3><p data-en="Video lookbooks, mockups to sell before producing, and an online catalog.">Lookbooks en video, mockups para vender antes de producir y catálogo en línea.</p><span class="start"><small data-en="Start with">Empiece con</small><span data-en="Product reel">Reel de producto</span></span></article>
+        <article class="niche flip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><circle cx="6" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M8.5 7.5L20 18M8.5 16.5L20 6"/></svg><h3 data-en="Barbershops &amp; services">Barberías y servicios</h3><p data-en="Your logo in motion, reels of your work and a button to book on WhatsApp.">Su logo en movimiento, reels de sus cortes y un botón para reservar por WhatsApp.</p><span class="start"><small data-en="Start with">Empiece con</small><span data-en="Animated logo">Logo animado</span></span></article>
+      </div>
+      <div class="audit rise">
+        <div>
+          <span class="label" data-en="Free · no commitment">Gratis · sin compromiso</span>
+          <h3 data-en="Not sure what you need?">¿No sabe qué necesita?</h3>
+          <p data-en="We review your Instagram or your Google profile and send you 3 specific improvements within 24 hours. Even if you don't hire us.">Revisamos su Instagram o su perfil de Google y le mandamos 3 mejoras concretas en menos de 24 horas. Aunque no nos contrate.</p>
+        </div>
+        <a class="btn chrome" data-wa="revision" href="https://wa.me/529843182480" target="_blank" rel="noopener" data-en="Get a free review">Pedir revisión gratis</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICIOS (claro) -->
+  <section id="servicios" class="light" style="padding-top:20px">
+    <div class="wrap">
+      <div class="head rise">
+        <div><span class="label" data-en="05 — Services">05 — Servicios</span><h2 class="chrome-h" data-h="servicios" data-en="Services<br>&amp; pricing">Servicios<br>y precios</h2></div>
         <p data-en="Clear prices in Mexican pesos (MXN), no fine print. Every project includes 2 rounds of changes and high-quality final files.">Precios claros en pesos mexicanos, sin letras chiquitas. Cada proyecto incluye 2 rondas de cambios y archivos finales en alta calidad.</p>
       </div>
       <div class="rise">
@@ -586,7 +663,7 @@
   <section id="paquetes" class="light" style="padding-top:20px">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="04 — Packages">04 — Paquetes</span><h2 class="chrome-h" data-h="paquetes" data-en="House<br>packages">Paquetes<br>de la casa</h2></div>
+        <div><span class="label" data-en="06 — Packages">06 — Paquetes</span><h2 class="chrome-h" data-h="paquetes" data-en="House<br>packages">Paquetes<br>de la casa</h2></div>
         <p data-en="Bundles designed for each stage of a business, cheaper than buying each piece separately.">Combinaciones pensadas para cada etapa del negocio, más baratas que pedir cada pieza por separado.</p>
       </div>
       <div class="packs">
@@ -616,7 +693,7 @@
   <section id="comparar" class="light" style="padding-top:20px">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="05 — Why us">05 — Por qué</span><h2 class="chrome-h" data-h="comparar" data-en="Why<br>work with us?">¿Por qué<br>con nosotros?</h2></div>
+        <div><span class="label" data-en="07 — Why us">07 — Por qué</span><h2 class="chrome-h" data-h="comparar" data-en="Why<br>work with us?">¿Por qué<br>con nosotros?</h2></div>
         <p data-en="Agency-level quality, without agency prices or long contracts.">Calidad de agencia, sin precio de agencia ni contratos largos.</p>
       </div>
       <div class="rise">
@@ -640,7 +717,7 @@
   <section id="proceso" class="light" style="padding-top:20px">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="06 — Process">06 — Proceso</span><h2 class="chrome-h" data-h="proceso" data-en="How we<br>work">Cómo<br>trabajamos</h2></div>
+        <div><span class="label" data-en="08 — Process">08 — Proceso</span><h2 class="chrome-h" data-h="proceso" data-en="How we<br>work">Cómo<br>trabajamos</h2></div>
         <p data-en="Short and clear, from the first message to the final files. You always know what's next and what you're paying for.">Corto y claro, del primer mensaje a los archivos finales. Siempre sabe qué sigue y qué está pagando.</p>
       </div>
       <ol class="steps rise">
@@ -662,7 +739,7 @@
         <figcaption><b>Diego Cárcamo</b><span data-en="Founder · Creative director">Fundador · Director creativo</span></figcaption>
       </figure>
       <div class="about-copy rise">
-        <div><span class="label" data-en="07 — About">07 — Nosotros</span><h2 class="chrome-h" data-h="nosotros" data-en="Who's<br>behind it">Quién está<br>detrás</h2></div>
+        <div><span class="label" data-en="09 — About">09 — Nosotros</span><h2 class="chrome-h" data-h="nosotros" data-en="Who's<br>behind it">Quién está<br>detrás</h2></div>
         <p data-en="I'm <b>Diego Cárcamo</b>, founder of CVRCVMO Marketing. I make animated videos, brand design and websites for businesses that already have a great product and need their image to match it.">Soy <b>Diego Cárcamo</b>, fundador de CVRCVMO Marketing. Hago videos animados, diseño de marca y páginas web para negocios que ya tienen un buen producto y necesitan que su imagen esté a la altura.</p>
         <p data-en="I work from Playa del Carmen: in person with local businesses and remotely with clients across Mexico. <b>You talk directly to me</b>, from the first message to delivery.">Trabajo desde Playa del Carmen: en persona con negocios de la zona y a distancia con clientes de todo México. <b>Usted habla directamente conmigo</b>, desde el primer mensaje hasta la entrega.</p>
         <dl class="facts">
@@ -678,7 +755,7 @@
   <!-- PREGUNTAS (claro) -->
   <section id="preguntas" class="light">
     <div class="wrap faq">
-      <div class="rise"><span class="label" data-en="08 — FAQ">08 — Preguntas</span><h2 class="chrome-h small" data-h="preguntas" data-en="Questions,<br>answered">Preguntas<br>frecuentes</h2></div>
+      <div class="rise"><span class="label" data-en="10 — FAQ">10 — Preguntas</span><h2 class="chrome-h small" data-h="preguntas" data-en="Questions,<br>answered">Preguntas<br>frecuentes</h2></div>
       <div class="rise">
         <details open><summary data-en="How do I know this isn't a scam?">¿Cómo sé que no es una estafa?</summary><p data-en="It's a fair question. You see a free sample before paying; we never ask for 100% upfront; every payment comes with a receipt and a written quote; and if the first version doesn't match what we agreed, we refund your deposit. If your business is in Playa del Carmen, we can also meet in person.">Es una pregunta válida. Usted ve una muestra gratis antes de pagar; nunca pedimos el 100% por adelantado; cada pago lleva recibo y cotización por escrito; y si la primera versión no cumple lo acordado, le devolvemos su anticipo. Si su negocio está en Playa del Carmen, también podemos vernos en persona.</p></details>
         <details><summary data-en="Why do you ask for a deposit?">¿Por qué piden anticipo?</summary><p data-en="To book your spot in our schedule and start production. It's only 50%, and it's covered by the refund guarantee.">Para apartar su lugar en la agenda y empezar a producir. Es solo el 50%, y está cubierto por la garantía de devolución.</p></details>
@@ -697,7 +774,7 @@
   <section id="contacto" class="dark">
     <div class="wrap contact">
       <div class="contact-copy rise">
-        <span class="label" data-en="09 — Contact">09 — Contacto</span>
+        <span class="label" data-en="11 — Contact">11 — Contacto</span>
         <h2 class="chrome-h big" data-h="contacto" data-en="Let's make it<br>look expensive.">Hagamos algo<br>que se vea caro.</h2>
         <p data-en="Tell us about your business and we'll send you a free sample. The message opens in WhatsApp; nothing is sent until you press send.">Cuéntenos de su negocio y le enviamos una muestra gratis. El mensaje se abre en WhatsApp; no se envía nada hasta que usted lo mande.</p>
         <form class="quote" id="quote">
@@ -710,6 +787,7 @@
               <option value="logo y kit de marca" data-en="Logo and brand kit" data-en-value="a logo and brand kit">Logo y kit de marca</option>
               <option value="una página web" data-en="A website" data-en-value="a website">Una página web</option>
               <option value="el plan mensual" data-en="Monthly plan" data-en-value="the monthly plan">Plan mensual</option>
+              <option value="una revisión gratis de mi Instagram" data-en="A free review of my Instagram" data-en-value="a free review of my Instagram">Una revisión gratis de mi Instagram</option>
               <option value="asesoría, no estoy seguro" data-en="Not sure yet" data-en-value="advice, I'm not sure yet">No estoy seguro</option>
             </select>
           </label>
@@ -759,7 +837,9 @@
   // ---------- Mensajes de WhatsApp ya escritos ----------
   var MSG = {
     muestra: EN ? "Hi Diego, I saw your website and I'd like a free sample for my business." : 'Hola Diego, vi su página y me gustaría una muestra gratis para mi negocio.',
-    hola: EN ? 'Hi Diego, I saw your website and I have a question.' : 'Hola Diego, vi su página y tengo una pregunta.'
+    hola: EN ? 'Hi Diego, I saw your website and I have a question.' : 'Hola Diego, vi su página y tengo una pregunta.',
+    marca: EN ? "Hi Diego, I saw the before & after on your website and I'd like to see how my brand would look." : 'Hola Diego, vi el antes y después en su página y me gustaría ver cómo se vería mi marca.',
+    revision: EN ? "Hi Diego, I'd like a free review of my Instagram. My account is: @" : 'Hola Diego, me gustaría una revisión gratis de mi Instagram. Mi cuenta es: @'
   };
   var waLink = function (text) { return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text); };
   document.querySelectorAll('[data-wa]').forEach(function (a) { a.href = waLink(MSG[a.getAttribute('data-wa')]); });
@@ -801,6 +881,30 @@
       window.dispatchEvent(new Event('monoslots'));
     }
     if (img.complete && img.naturalWidth === 0) noPhoto(); else img.addEventListener('error', noPhoto);
+  })();
+
+  // ---------- Antes y después: se arrastra con el dedo o el mouse; flechas del teclado con el control oculto ----------
+  (function () {
+    var ba = document.getElementById('ba'); if (!ba) return;
+    var before = document.getElementById('baBefore'), line = document.getElementById('baLine'), range = document.getElementById('baRange');
+    var drag = false, touched = false;
+    function set(p) { p = Math.max(0, Math.min(100, p)); before.style.clipPath = 'inset(0 ' + (100 - p) + '% 0 0)'; line.style.left = p + '%'; range.value = Math.round(p); }
+    function at(e) { var r = ba.getBoundingClientRect(); return (e.clientX - r.left) / r.width * 100; }
+    ba.addEventListener('pointerdown', function (e) { drag = touched = true; set(at(e)); });
+    addEventListener('pointermove', function (e) { if (drag) set(at(e)); });
+    addEventListener('pointerup', function () { drag = false; });
+    addEventListener('pointercancel', function () { drag = false; });
+    range.addEventListener('input', function () { touched = true; set(+range.value); });
+    set(50);
+    // La primera vez que aparece, la línea se mueve sola un momento para mostrar que se puede arrastrar
+    if (!reduce && 'IntersectionObserver' in window) {
+      var shown = false;
+      new IntersectionObserver(function (es) {
+        if (!es[0].isIntersecting || shown) return; shown = true;
+        var t0 = performance.now();
+        (function step(now) { var k = (now - t0) / 2200; if (touched) return; if (k >= 1) { set(50); return; } set(50 + Math.sin(k * Math.PI * 2) * 30); requestAnimationFrame(step); })(t0);
+      }, {threshold: 0.6}).observe(ba);
+    }
   })();
 
   // ---------- Menú en celular ----------
