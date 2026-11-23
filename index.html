@@ -250,6 +250,7 @@
   .svc .price small { display: block; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; color: var(--stone); text-transform: uppercase; }
   .svc .price b { font-family: var(--serif); font-weight: 400; font-size: 2.2rem; line-height: 1; }
   .svc-cat { display: flex; justify-content: space-between; padding: 34px 0 10px; }
+  .svc .spec .sp { display: none; }
   .svc-cat:first-child { padding-top: 0; }
   .next-price { display: block; margin-top: 6px; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.04em; color: var(--stone); }
   .pack.star .next-price { color: var(--mist); }
@@ -425,6 +426,71 @@
     h2.chrome-h { background: none !important; color: #3A4152 !important; -webkit-text-fill-color: #3A4152 !important; }
     .dark h2.chrome-h { color: #E3E7F0 !important; -webkit-text-fill-color: #E3E7F0 !important; }
   }
+  /* ---------- Compactación (nov 2026): misma información, menos desplazamiento ---------- */
+  section { padding-block: 96px; }
+  section.sub { padding-top: 0; padding-bottom: 64px; }
+  .head { margin-bottom: 40px; }
+  .sub .head { margin-bottom: 30px; }
+  .case { margin-top: 56px; }
+  .g-card { padding: 24px 22px; gap: 10px; }
+  .pack { padding: 28px 26px; gap: 16px; }
+  .svc { padding-block: 20px; }
+  .compare th, .compare td { padding: 16px; }
+  @media (max-width: 900px) {
+    section { padding-block: 56px; }
+    section.sub { padding-top: 0; padding-bottom: 40px; }
+    .head { gap: 12px; margin-bottom: 24px; }
+    .sub .head { margin-bottom: 20px; }
+    h2.chrome-h { margin-top: 10px; font-size: clamp(2.1rem, 9.4vw, 3rem); }
+    h2.chrome-h.small { font-size: clamp(1.9rem, 8vw, 2.5rem); }
+    .case { margin-top: 32px; }
+    .case-copy { padding: 22px 18px; gap: 12px; }
+    .case-media { min-height: 210px; }
+    .ba-notes { gap: 12px; margin-top: 20px; }
+    .portrait { width: 100%; max-width: 250px; aspect-ratio: 5 / 6; margin-inline: auto; }
+    .portrait img { object-position: center 20%; }
+    .about { gap: 26px; }
+    .about-copy { gap: 14px; }
+    .facts div { padding-block: 10px; }
+    .audit { padding: 22px 18px; gap: 14px; }
+    .audit h3 { font-size: 1.6rem; }
+    .compare th, .compare td { padding: 12px 10px; }
+    .svc-cat { padding: 24px 0 6px; }
+  }
+  @media (max-width: 560px) {
+    .g-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .g-card { padding: 16px 14px; gap: 8px; border-radius: 18px; }
+    .g-card svg { width: 26px; height: 26px; }
+    .g-card h3 { font-size: 1.12rem; }
+    .g-card p { font-size: 0.8rem; line-height: 1.4; }
+    .pay { gap: 14px; }
+    .niches { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .niche { padding: 16px 14px; gap: 8px; border-radius: 18px; }
+    .niche svg { width: 26px; height: 26px; }
+    .niche h3 { font-size: 1.12rem; }
+    .niche p { font-size: 0.8rem; line-height: 1.4; }
+    .niche .start { padding-top: 8px; font-size: 0.82rem; }
+    .niche .start small { font-size: 0.6rem; }
+    .svc { padding-block: 14px; gap: 4px 14px; }
+    .svc h3 { font-size: 1.4rem; }
+    .svc p { font-size: 0.86rem; line-height: 1.4; }
+    .svc .spec { line-height: 1.5; font-size: 0.7rem; }
+    .svc .spec .sb { display: none; }
+    .svc .spec .sp { display: inline; }
+    .svc .price b { font-size: 1.8rem; }
+    .packs { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; margin-inline: -20px; padding: 0 20px 10px; scrollbar-width: none; perspective: none; }
+    .packs::-webkit-scrollbar { display: none; }
+    .packs .pack { flex: 0 0 80%; scroll-snap-align: center; padding: 22px 20px; gap: 12px; }
+    .js .packs .flip { opacity: 1; transform: none; }
+    .pack h3 { font-size: 1.8rem; }
+    .pack .amt { font-size: 2.8rem; }
+    .pack ul { gap: 6px; font-size: 0.88rem; }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 0; }
+    .steps li { padding: 14px 12px 0 0; gap: 4px; }
+    .steps li::before { font-size: 1.5rem; }
+    .steps h3 { font-size: 0.95rem; }
+    .steps p { font-size: 0.8rem; line-height: 1.4; }
+  }
 </style>
 </head>
 <body>
@@ -537,10 +603,10 @@
   </section>
 
   <!-- ANTES Y DESPUÉS (claro, comparador que se arrastra) -->
-  <section id="antes" class="light" style="padding-top:20px">
+  <section id="antes" class="light sub">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="02 — Before &amp; after">02 — Antes y después</span><h2 class="chrome-h" data-h="antes" data-en="Before<br>&amp; after">Antes y<br>después</h2></div>
+        <div><span class="label" data-en="Before &amp; after">Antes y después</span><h2 class="chrome-h small" data-h="antes" data-en="Before<br>&amp; after">Antes y<br>después</h2></div>
         <p data-en="When a business grows, its image gets left behind. This is how we would redesign a café in Playa del Carmen. Drag the line to compare. (Café Marea is a sample brand.)">Cuando un negocio crece, su imagen se queda atrás. Así rediseñaríamos un café de Playa del Carmen. Arrastre la línea para comparar. (Café Marea es una marca de muestra.)</p>
       </div>
       <div class="ba rise" id="ba">
@@ -562,7 +628,7 @@
   <section id="garantia" class="dark guarantee">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="03 — Guarantee">03 — Garantía</span><h2 class="chrome-h" data-h="garantia" data-en="Zero risk<br>for you.">Cero riesgo<br>para usted.</h2></div>
+        <div><span class="label" data-en="02 — Guarantee">02 — Garantía</span><h2 class="chrome-h" data-h="garantia" data-en="Zero risk<br>for you.">Cero riesgo<br>para usted.</h2></div>
         <p data-en="We know it's hard to trust a studio you just met. That's why we take the risk, not you.">Sabemos que no es fácil confiar en un estudio que acaba de conocer. Por eso el riesgo lo tomamos nosotros, no usted.</p>
       </div>
       <div class="g-grid">
@@ -609,7 +675,7 @@
   <section id="para" class="light">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="04 — Made for you">04 — Para su negocio</span><h2 class="chrome-h" data-h="para" data-en="Made for<br>your business">Hecho para<br>su negocio</h2></div>
+        <div><span class="label" data-en="03 — Made for you">03 — Para su negocio</span><h2 class="chrome-h small" data-h="para" data-en="Made for<br>your business">Hecho para<br>su negocio</h2></div>
         <p data-en="We work with the businesses of Playa del Carmen: we know what your customers look for before visiting you and what makes them choose you.">Trabajamos con los negocios de Playa del Carmen: sabemos qué buscan sus clientes antes de visitarlo y qué los hace elegirlo.</p>
       </div>
       <div class="niches">
@@ -630,30 +696,30 @@
   </section>
 
   <!-- SERVICIOS (claro) -->
-  <section id="servicios" class="light" style="padding-top:20px">
+  <section id="servicios" class="light sub">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="05 — Services">05 — Servicios</span><h2 class="chrome-h" data-h="servicios" data-en="Services<br>&amp; pricing">Servicios<br>y precios</h2></div>
+        <div><span class="label" data-en="Services">Servicios</span><h2 class="chrome-h" data-h="servicios" data-en="Services<br>&amp; pricing">Servicios<br>y precios</h2></div>
         <p data-en="Clear prices in Mexican pesos (MXN), no fine print. Every project includes 2 rounds of changes and high-quality final files.">Precios claros en pesos mexicanos, sin letras chiquitas. Cada proyecto incluye 2 rondas de cambios y archivos finales en alta calidad.</p>
       </div>
       <div class="rise">
         <div class="svc-cat"><span class="label">Video · MP4 1080p</span></div>
         <div class="svc-list">
-          <div class="svc"><span class="n">V.01</span><h3 data-en="Product video">Video de producto</h3><p data-en="Your product with your logo, colors and price, animated to announce launches and promotions.">Su producto con su logo, colores y precio, animado para anunciar lanzamientos y promociones.</p><span class="spec" data-en="10–15 s<br>Vertical or horizontal<br>24–48 h">10–15 s<br>Vertical u horizontal<br>24–48 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="590" data-launch="325" data-note>$590</b></span></div>
-          <div class="svc"><span class="n">V.02</span><h3 data-en="Trending reel">Reel de tendencia</h3><p data-en="Formats that are working on Reels and TikTok right now: music player, kinetic type, 3D and product reveal.">Los formatos que están funcionando en Reels y TikTok: reproductor de música, tipografía en movimiento, 3D y revelación de producto.</p><span class="spec">15–25 s<br>1080 × 1920<br>48–72 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="890" data-launch="510" data-note>$890</b></span></div>
-          <div class="svc"><span class="n">V.03</span><h3 data-en="Explainer video">Video informativo</h3><p data-en="Menu, how to order, shipping, opening hours or prices, explained clearly and animated. Available in Spanish and English.">Menú, cómo pedir, envíos, horarios o precios, explicado claro y animado. Disponible en español e inglés.</p><span class="spec">40–90 s<br>1080 × 1920<br>72 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="790" data-launch="460" data-note>$790</b></span></div>
-          <div class="svc"><span class="n">V.04</span><h3 data-en="Animated logo">Logo animado</h3><p data-en="The intro and outro of your videos with your logo in motion and a 3D finish, for a consistent, recognizable brand.">La apertura y el cierre de sus videos con su logo en movimiento y acabado 3D, para que su marca se reconozca en todo lo que publica.</p><span class="spec" data-en="3–5 s<br>Transparent background<br>24 h">3–5 s<br>Fondo transparente<br>24 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="490" data-launch="290" data-note>$490</b></span></div>
+          <div class="svc"><span class="n">V.01</span><h3 data-en="Product video">Video de producto</h3><p data-en="Your product with your logo, colors and price, animated to announce launches and promotions.">Su producto con su logo, colores y precio, animado para anunciar lanzamientos y promociones.</p><span class="spec" data-en="10–15 s<br class='sb'><span class='sp'> · </span>Vertical or horizontal<br class='sb'><span class='sp'> · </span>24–48 h">10–15 s<br class='sb'><span class='sp'> · </span>Vertical u horizontal<br class='sb'><span class='sp'> · </span>24–48 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="590" data-launch="325" data-note>$590</b></span></div>
+          <div class="svc"><span class="n">V.02</span><h3 data-en="Trending reel">Reel de tendencia</h3><p data-en="Formats that are working on Reels and TikTok right now: music player, kinetic type, 3D and product reveal.">Los formatos que están funcionando en Reels y TikTok: reproductor de música, tipografía en movimiento, 3D y revelación de producto.</p><span class="spec">15–25 s<br class='sb'><span class='sp'> · </span>1080 × 1920<br class='sb'><span class='sp'> · </span>48–72 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="890" data-launch="510" data-note>$890</b></span></div>
+          <div class="svc"><span class="n">V.03</span><h3 data-en="Explainer video">Video informativo</h3><p data-en="Menu, how to order, shipping, opening hours or prices, explained clearly and animated. Available in Spanish and English.">Menú, cómo pedir, envíos, horarios o precios, explicado claro y animado. Disponible en español e inglés.</p><span class="spec">40–90 s<br class='sb'><span class='sp'> · </span>1080 × 1920<br class='sb'><span class='sp'> · </span>72 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="790" data-launch="460" data-note>$790</b></span></div>
+          <div class="svc"><span class="n">V.04</span><h3 data-en="Animated logo">Logo animado</h3><p data-en="The intro and outro of your videos with your logo in motion and a 3D finish, for a consistent, recognizable brand.">La apertura y el cierre de sus videos con su logo en movimiento y acabado 3D, para que su marca se reconozca en todo lo que publica.</p><span class="spec" data-en="3–5 s<br class='sb'><span class='sp'> · </span>Transparent background<br class='sb'><span class='sp'> · </span>24 h">3–5 s<br class='sb'><span class='sp'> · </span>Fondo transparente<br class='sb'><span class='sp'> · </span>24 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="490" data-launch="290" data-note>$490</b></span></div>
         </div>
         <div class="svc-cat"><span class="label" data-en="Design · PNG · SVG">Diseño · PNG · SVG</span></div>
         <div class="svc-list">
-          <div class="svc"><span class="n">D.01</span><h3 data-en="Logo design">Diseño de logo</h3><p data-en="Custom identity: wordmark and symbol, versions for light and dark backgrounds, ready for social media, print and packaging.">Identidad a la medida: logotipo y símbolo, versiones para fondo claro y oscuro, listos para redes, impresión y empaque.</p><span class="spec" data-en="Logo + symbol<br>2 proposals<br>48 h">Logo + símbolo<br>2 propuestas<br>48 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="1290" data-launch="480" data-note>$1,290</b></span></div>
-          <div class="svc"><span class="n">D.02</span><h3 data-en="Brand kit">Kit de marca</h3><p data-en="Color palette, fonts and usage guide so your brand looks the same everywhere.">Paleta de colores, tipografías y guía de uso para que su marca se vea igual en todos lados.</p><span class="spec" data-en="Palette + fonts + guide<br>48 h">Paleta + tipografías + guía<br>48 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="690" data-launch="290" data-note>$690</b></span></div>
-          <div class="svc"><span class="n">D.03</span><h3 data-en="Info carousel">Carrusel informativo</h3><p data-en="Up to 6 images: how to order, shipping, sizes, menu or FAQ.">Hasta 6 imágenes: cómo pedir, envíos, tallas, menú o preguntas frecuentes.</p><span class="spec" data-en="6 images<br>1080 × 1350<br>48 h">6 imágenes<br>1080 × 1350<br>48 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="450" data-launch="255" data-note>$450</b></span></div>
-          <div class="svc"><span class="n">D.04</span><h3 data-en="Product mockup">Mockup de producto</h3><p data-en="Your design applied to the product or garment, so you can sell it before producing it.">Su diseño aplicado al producto o la prenda, para venderlo antes de producirlo.</p><span class="spec"><span data-en="3 for">3 por</span> <span class="num" data-p="490" data-launch="300">$490</span><br>24 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="190" data-launch="120" data-note>$190</b></span></div>
+          <div class="svc"><span class="n">D.01</span><h3 data-en="Logo design">Diseño de logo</h3><p data-en="Custom identity: wordmark and symbol, versions for light and dark backgrounds, ready for social media, print and packaging.">Identidad a la medida: logotipo y símbolo, versiones para fondo claro y oscuro, listos para redes, impresión y empaque.</p><span class="spec" data-en="Logo + symbol<br class='sb'><span class='sp'> · </span>2 proposals<br class='sb'><span class='sp'> · </span>48 h">Logo + símbolo<br class='sb'><span class='sp'> · </span>2 propuestas<br class='sb'><span class='sp'> · </span>48 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="1290" data-launch="480" data-note>$1,290</b></span></div>
+          <div class="svc"><span class="n">D.02</span><h3 data-en="Brand kit">Kit de marca</h3><p data-en="Color palette, fonts and usage guide so your brand looks the same everywhere.">Paleta de colores, tipografías y guía de uso para que su marca se vea igual en todos lados.</p><span class="spec" data-en="Palette + fonts + guide<br class='sb'><span class='sp'> · </span>48 h">Paleta + tipografías + guía<br class='sb'><span class='sp'> · </span>48 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="690" data-launch="290" data-note>$690</b></span></div>
+          <div class="svc"><span class="n">D.03</span><h3 data-en="Info carousel">Carrusel informativo</h3><p data-en="Up to 6 images: how to order, shipping, sizes, menu or FAQ.">Hasta 6 imágenes: cómo pedir, envíos, tallas, menú o preguntas frecuentes.</p><span class="spec" data-en="6 images<br class='sb'><span class='sp'> · </span>1080 × 1350<br class='sb'><span class='sp'> · </span>48 h">6 imágenes<br class='sb'><span class='sp'> · </span>1080 × 1350<br class='sb'><span class='sp'> · </span>48 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="450" data-launch="255" data-note>$450</b></span></div>
+          <div class="svc"><span class="n">D.04</span><h3 data-en="Product mockup">Mockup de producto</h3><p data-en="Your design applied to the product or garment, so you can sell it before producing it.">Su diseño aplicado al producto o la prenda, para venderlo antes de producirlo.</p><span class="spec"><span data-en="3 for">3 por</span> <span class="num" data-p="490" data-launch="300">$490</span><br class='sb'><span class='sp'> · </span>24 h</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="190" data-launch="120" data-note>$190</b></span></div>
         </div>
         <div class="svc-cat" id="web"><span class="label" data-en="Web · Sites for your brand">Web · Páginas para su marca</span></div>
         <div class="svc-list">
-          <div class="svc"><span class="n">W.01</span><h3 data-en="Website">Página web</h3><p data-en="Professional mobile-first site: home, catalog or services, gallery, location and a direct WhatsApp button. Publishing included; if you have your own domain, we connect it.">Sitio profesional adaptado a celular: inicio, catálogo o servicios, galería, ubicación y botón directo a WhatsApp. Publicación incluida; si tiene dominio propio, lo conectamos.</p><span class="spec" data-en="Up to 5 sections<br>Publishing included<br>5–7 days">Hasta 5 secciones<br>Publicación incluida<br>5–7 días</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="4500" data-launch="2400" data-note>$4,500</b></span></div>
+          <div class="svc"><span class="n">W.01</span><h3 data-en="Website">Página web</h3><p data-en="Professional mobile-first site: home, catalog or services, gallery, location and a direct WhatsApp button. Publishing included; if you have your own domain, we connect it.">Sitio profesional adaptado a celular: inicio, catálogo o servicios, galería, ubicación y botón directo a WhatsApp. Publicación incluida; si tiene dominio propio, lo conectamos.</p><span class="spec" data-en="Up to 5 sections<br class='sb'><span class='sp'> · </span>Publishing included<br class='sb'><span class='sp'> · </span>5–7 days">Hasta 5 secciones<br class='sb'><span class='sp'> · </span>Publicación incluida<br class='sb'><span class='sp'> · </span>5–7 días</span><span class="price"><small data-en="From">Desde</small><b class="num" data-p="4500" data-launch="2400" data-note>$4,500</b></span></div>
         </div>
         <p class="svc-note" data-en="“From” prices vary with length and complexity. Your written quote always shows the final price before you pay anything.">Los precios “desde” varían según duración y complejidad. Su cotización por escrito siempre muestra el precio final antes de que pague algo.</p>
       </div>
@@ -661,11 +727,11 @@
   </section>
 
   <!-- PAQUETES (claro) -->
-  <section id="paquetes" class="light" style="padding-top:20px">
+  <section id="paquetes" class="light sub">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="06 — Packages">06 — Paquetes</span><h2 class="chrome-h" data-h="paquetes" data-en="House<br>packages">Paquetes<br>de la casa</h2></div>
-        <p data-en="Bundles designed for each stage of a business, cheaper than buying each piece separately.">Combinaciones pensadas para cada etapa del negocio, más baratas que pedir cada pieza por separado.</p>
+        <div><span class="label" data-en="Packages">Paquetes</span><h2 class="chrome-h small" data-h="paquetes" data-en="House<br>packages">Paquetes<br>de la casa</h2></div>
+        <p data-en="Bundles for each stage of a business, cheaper than buying each piece separately.">Combinaciones para cada etapa del negocio, más baratas que pedir cada pieza por separado.</p>
       </div>
       <div class="packs">
         <article class="pack flip">
@@ -691,10 +757,10 @@
   </section>
 
   <!-- COMPARACIÓN (claro) -->
-  <section id="comparar" class="light" style="padding-top:20px">
+  <section id="comparar" class="light">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="07 — Why us">07 — Por qué</span><h2 class="chrome-h" data-h="comparar" data-en="Why<br>work with us?">¿Por qué<br>con nosotros?</h2></div>
+        <div><span class="label" data-en="04 — Why us">04 — Por qué nosotros</span><h2 class="chrome-h small" data-h="comparar" data-en="Why<br>work with us?">¿Por qué<br>con nosotros?</h2></div>
         <p data-en="Agency-level quality, without agency prices or long contracts.">Calidad de agencia, sin precio de agencia ni contratos largos.</p>
       </div>
       <div class="rise">
@@ -715,11 +781,11 @@
   </section>
 
   <!-- PROCESO (claro) -->
-  <section id="proceso" class="light" style="padding-top:20px">
+  <section id="proceso" class="light sub">
     <div class="wrap">
       <div class="head rise">
-        <div><span class="label" data-en="08 — Process">08 — Proceso</span><h2 class="chrome-h" data-h="proceso" data-en="How we<br>work">Cómo<br>trabajamos</h2></div>
-        <p data-en="Short and clear, from the first message to the final files. You always know what's next and what you're paying for.">Corto y claro, del primer mensaje a los archivos finales. Siempre sabe qué sigue y qué está pagando.</p>
+        <div><span class="label" data-en="Process">Proceso</span><h2 class="chrome-h small" data-h="proceso" data-en="How we<br>work">Cómo<br>trabajamos</h2></div>
+        <p data-en="From the first message to the final files, you always know what's next and what you're paying for.">Del primer mensaje a los archivos finales, siempre sabe qué sigue y qué está pagando.</p>
       </div>
       <ol class="steps rise">
         <li><h3 data-en="Message">Mensaje</h3><p data-en="Tell us what you sell and what you need, by WhatsApp or Instagram.">Nos cuenta qué vende y qué necesita, por WhatsApp o Instagram.</p></li>
@@ -740,7 +806,7 @@
         <figcaption><b>Diego Cárcamo</b><span data-en="Founder · Creative director">Fundador · Director creativo</span></figcaption>
       </figure>
       <div class="about-copy rise">
-        <div><span class="label" data-en="09 — About">09 — Nosotros</span><h2 class="chrome-h" data-h="nosotros" data-en="Who's<br>behind it">Quién está<br>detrás</h2></div>
+        <div><span class="label" data-en="05 — About">05 — Nosotros</span><h2 class="chrome-h" data-h="nosotros" data-en="Who's<br>behind it">Quién está<br>detrás</h2></div>
         <p data-en="I'm <b>Diego Cárcamo</b>, founder of CVRCVMO Marketing. I make animated videos, brand design and websites for businesses that already have a great product and need their image to match it.">Soy <b>Diego Cárcamo</b>, fundador de CVRCVMO Marketing. Hago videos animados, diseño de marca y páginas web para negocios que ya tienen un buen producto y necesitan que su imagen esté a la altura.</p>
         <p data-en="I work from Playa del Carmen: in person with local businesses and remotely with clients across Mexico. <b>You talk directly to me</b>, from the first message to delivery.">Trabajo desde Playa del Carmen: en persona con negocios de la zona y a distancia con clientes de todo México. <b>Usted habla directamente conmigo</b>, desde el primer mensaje hasta la entrega.</p>
         <dl class="facts">
@@ -756,7 +822,7 @@
   <!-- PREGUNTAS (claro) -->
   <section id="preguntas" class="light">
     <div class="wrap faq">
-      <div class="rise"><span class="label" data-en="10 — FAQ">10 — Preguntas</span><h2 class="chrome-h small" data-h="preguntas" data-en="Questions,<br>answered">Preguntas<br>frecuentes</h2></div>
+      <div class="rise"><span class="label" data-en="06 — FAQ">06 — Preguntas</span><h2 class="chrome-h small" data-h="preguntas" data-en="Questions,<br>answered">Preguntas<br>frecuentes</h2></div>
       <div class="rise">
         <details open><summary data-en="How do I know this isn't a scam?">¿Cómo sé que no es una estafa?</summary><p data-en="It's a fair question. You see a free sample before paying; we never ask for 100% upfront; every payment comes with a receipt and a written quote; and if the first version doesn't match what we agreed, we refund your deposit. If your business is in Playa del Carmen, we can also meet in person.">Es una pregunta válida. Usted ve una muestra gratis antes de pagar; nunca pedimos el 100% por adelantado; cada pago lleva recibo y cotización por escrito; y si la primera versión no cumple lo acordado, le devolvemos su anticipo. Si su negocio está en Playa del Carmen, también podemos vernos en persona.</p></details>
         <details><summary data-en="Why do you ask for a deposit?">¿Por qué piden anticipo?</summary><p data-en="To book your spot in our schedule and start production. It's only 50%, and it's covered by the refund guarantee.">Para apartar su lugar en la agenda y empezar a producir. Es solo el 50%, y está cubierto por la garantía de devolución.</p></details>
@@ -775,7 +841,7 @@
   <section id="contacto" class="dark">
     <div class="wrap contact">
       <div class="contact-copy rise">
-        <span class="label" data-en="11 — Contact">11 — Contacto</span>
+        <span class="label" data-en="07 — Contact">07 — Contacto</span>
         <h2 class="chrome-h big" data-h="contacto" data-en="Let's make it<br>look expensive.">Hagamos algo<br>que se vea caro.</h2>
         <p data-en="Tell us about your business and we'll send you a free sample. The message opens in WhatsApp; nothing is sent until you press send.">Cuéntenos de su negocio y le enviamos una muestra gratis. El mensaje se abre en WhatsApp; no se envía nada hasta que usted lo mande.</p>
         <form class="quote" id="quote">
