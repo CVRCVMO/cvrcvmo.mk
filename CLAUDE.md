@@ -1,7 +1,7 @@
 # CVRCVMO Marketing · página web (repositorio PÚBLICO)
 
-Este repositorio es **público** y solo contiene la página web, que GitHub Pages publica desde `main` en cvrcvmo.github.io/cvrcvmo.mk.
+Este repositorio es **público** y solo contiene la página web, que GitHub Pages publica desde `main` en cvrcvmo.github.io/cvrcvmo.mk. Desde el 27 de noviembre de 2026 la portada es el rediseño **CVRCVMO Creative Studio · Beyond visuals** (su fuente y herramientas están en `rediseno/` del repositorio privado). La página anterior quedó en el historial (commit `8355bbf`).
 
-- Aquí solo van archivos de la página: `index.html`, `img/`, `video/`, `ejemplo-3d/`, `perchero-3d/`, `muestra/`, `p/` (vistas con link escondido, solo con permiso de Diego), `terminos/`, `cotizacion/index.html`, `.nojekyll` e `ig/` (imágenes y videos que Instagram toma de un link público al publicar).
+- Aquí solo van archivos de la página: `index.html`, `css/`, `js/`, `fonts/`, `img/`, `video/`, `ejemplo-3d/`, `perchero-3d/`, `muestra/`, `p/` (vistas con link escondido, solo con permiso de Diego), `terminos/`, `cotizacion/index.html`, `.nojekyll` e `ig/` (imágenes y videos que Instagram toma de un link público al publicar).
 - **Todo lo demás** (prospectos, mensajes, métricas, investigación, bocetos de clientes, proyecto de video, generador de cotizaciones) va en el repositorio **privado** `CVRCVMO/cvrcvmo.trabajos`. Los cambios a la página se hacen allá y se copian a este `main`.
 - Nunca subas aquí datos de clientes, datos bancarios, cotizaciones ni recibos.
