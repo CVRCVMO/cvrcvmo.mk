@@ -198,7 +198,8 @@ function showPieza(i) {
   $('#salaN').textContent = `Nº ${String(salaI + 1).padStart(2, '0')} / ${String(piezas.length).padStart(2, '0')}`;
   $('#salaT').textContent = $('.placa b', p).textContent;
   const tag = $('.placa-m .tag', p);
-  $('#salaM').textContent = `${$('.placa-m', p).firstChild.textContent.trim()} · ${tag ? tag.textContent : ''}`;
+  const marca = [...$('.placa-m', p).childNodes].filter((n) => n.nodeType === 3).map((n) => n.textContent.trim()).join('');
+  $('#salaM').textContent = [marca, tag ? tag.textContent : ''].filter(Boolean).join(' · ');
   $('#salaD').textContent = `${p.dataset.disc} · ${p.dataset.fmt}`;
   salaV.play().catch(() => {});
 }
@@ -358,3 +359,19 @@ onScroll();
 // la luz de la portada sube durante la revelación: se refleja en el halo detrás del nombre
 if (escultura && !reduce) { const t0 = performance.now(); const glow = () => { heroSec.style.setProperty('--glow', escultura.light.toFixed(3)); if (escultura.light < 1 && performance.now() - t0 < 6000) requestAnimationFrame(glow); }; requestAnimationFrame(glow); }
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { layoutHall(); requestTick(); });
+
+
+/* ---------------- Visual Studies: se carga al acercarse y suena nada; solo se mueve a la vista ---------------- */
+{
+  const v = $('.vs-video');
+  if (v) {
+    const en = EN;
+    const src = (en && v.dataset.srcEn) || v.dataset.src;
+    if (reduce) { v.controls = true; v.preload = 'metadata'; v.src = src; v.removeAttribute('loop'); }
+    else if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => es.forEach((e) => {
+        if (e.isIntersecting) { if (!v.src) v.src = src; v.play().catch(() => {}); } else v.pause();
+      }), {threshold: 0.35}).observe(v);
+    } else { v.src = src; v.controls = true; }
+  }
+}
